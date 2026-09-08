@@ -77,11 +77,22 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Série de Competências Empreendedoras | 100 Open Startups" },
+      {
+        name: "description",
+        content:
+          "Ciclo de palestras presenciais com founders e executivos sobre as 16 competências empreendedoras.",
+      },
+      { name: "author", content: "100 Open Startups" },
+      {
+        property: "og:title",
+        content: "Série de Competências Empreendedoras | 100 Open Startups",
+      },
+      {
+        property: "og:description",
+        content:
+          "Palestras presenciais com quem viveu o caso na prática. Programação em confirmação.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
