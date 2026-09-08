@@ -134,7 +134,7 @@ const comoParticipar = [
 ];
 
 function Index() {
-  const [blocoAtivo, setBlocoAtivo] = useState(blocos[0].id);
+  const [blocoAtivo, setBlocoAtivo] = useState<string>(blocos[0]!.id);
   const lista = competencias.filter((c) => c.bloco === blocoAtivo);
   const bloco = blocos.find((b) => b.id === blocoAtivo)!;
 
