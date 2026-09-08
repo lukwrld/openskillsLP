@@ -25,6 +25,11 @@ import { blocos, competencias, estaConfirmada } from "@/data/programacao";
 const CTA_HREF = "URL_A_DEFINIR";
 const CTA_LABEL = "Quero acompanhar a Série";
 
+/** Largura máxima única de container, usada em TODAS as seções. */
+const CONTAINER = "mx-auto w-full max-w-5xl px-4 sm:px-6";
+/** Largura máxima confortável de leitura para texto corrido, listas e FAQ. */
+const LEITURA = "mx-auto w-full max-w-[680px]";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -139,10 +144,16 @@ function Index() {
   const bloco = blocos.find((b) => b.id === blocoAtivo)!;
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="relative min-h-screen bg-background text-foreground">
+      {/* DEGRADÊ SUAVE ATRÁS DO HEADER + HERO */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-[560px] bg-gradient-to-b from-accent via-accent/40 to-transparent"
+      />
+
       {/* HEADER */}
-      <header className="sticky top-0 z-50 border-b border-border bg-background/85 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+      <header className="glass-header sticky top-0 z-50">
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2.5">
             <img
               src={logo.url}
@@ -162,21 +173,33 @@ function Index() {
         </div>
       </header>
 
-      <main>
+      <main className="relative">
         {/* HERO */}
-        <section className="relative overflow-hidden">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-40 mx-auto h-96 max-w-3xl rounded-full bg-accent blur-3xl opacity-70"
-          />
-          <div className="relative mx-auto max-w-3xl px-4 py-20 text-center sm:px-6 sm:py-28">
+        <section className="relative">
+          <div className={`${CONTAINER} py-16 text-center sm:py-24`}>
+            {/* Logo grande com glow */}
+            <div className="relative mx-auto mb-8 flex w-fit items-center justify-center">
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute size-40 rounded-full bg-primary/25 blur-3xl"
+              />
+              <img
+                src={logo.url}
+                alt="100 Open Startups"
+                className="relative size-24 sm:size-32"
+                width={128}
+                height={128}
+              />
+            </div>
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
               100 Open Startups
             </p>
-            <h1 className="mt-4 font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl">
+            <h1 className="mx-auto mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl">
               Série de Competências Empreendedoras
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
+            <p
+              className={`${LEITURA} mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg`}
+            >
               Aprenda competências empreendedoras com quem já viveu isso na
               prática. Palestras presenciais com founders e executivos, direto
               dos casos reais do Congresso da 100 Open Startups.
@@ -193,11 +216,13 @@ function Index() {
 
         {/* O QUE É A SÉRIE */}
         <section className="border-y border-border bg-surface">
-          <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20">
+          <div className={`${CONTAINER} py-16 text-center sm:py-20`}>
             <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
               O que é a Série
             </h2>
-            <div className="mt-6 space-y-5 text-base leading-relaxed text-muted-foreground">
+            <div
+              className={`${LEITURA} mt-6 space-y-5 text-base leading-relaxed text-muted-foreground`}
+            >
               <p>
                 A Série de Competências Empreendedoras é um ciclo de palestras
                 presenciais, de 2 horas cada, conduzidas por um founder ou
@@ -218,17 +243,17 @@ function Index() {
         </section>
 
         {/* BENEFÍCIOS */}
-        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+        <section className={`${CONTAINER} py-16 text-center sm:py-20`}>
           <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
             O que você ganha
           </h2>
-          <div className="mt-8 grid gap-5 sm:grid-cols-2">
+          <div className="mx-auto mt-8 grid max-w-4xl gap-5 sm:grid-cols-2">
             {beneficios.map(({ Icone, titulo, texto }) => (
               <article
                 key={titulo}
-                className="rounded-2xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-md"
+                className="card-hover rounded-2xl border border-border bg-card p-6 text-center shadow-sm"
               >
-                <span className="flex size-10 items-center justify-center rounded-xl bg-accent text-primary">
+                <span className="mx-auto flex size-10 items-center justify-center rounded-xl bg-accent text-primary">
                   <Icone className="size-5" aria-hidden="true" />
                 </span>
                 <h3 className="mt-4 font-display text-lg font-semibold">
@@ -243,15 +268,14 @@ function Index() {
         </section>
 
         {/* 16 COMPETÊNCIAS E PROGRAMAÇÃO */}
-        <section
-          id="programacao"
-          className="border-y border-border bg-surface"
-        >
-          <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+        <section id="programacao" className="border-y border-border bg-surface">
+          <div className={`${CONTAINER} py-16 text-center sm:py-20`}>
             <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
               As 16 competências e a programação
             </h2>
-            <div className="mt-5 flex items-start gap-3 rounded-2xl border border-primary/25 bg-accent/60 p-4 text-sm leading-relaxed text-foreground">
+            <div
+              className={`${LEITURA} mt-5 flex items-start gap-3 rounded-2xl border border-primary/25 bg-accent/60 p-4 text-left text-sm leading-relaxed text-foreground`}
+            >
               <Info className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
               <p>
                 <strong className="font-semibold">
@@ -265,7 +289,7 @@ function Index() {
 
             {/* Abas dos 4 blocos temáticos */}
             <div
-              className="mt-8 flex flex-wrap gap-2"
+              className="mt-8 flex flex-wrap justify-center gap-2"
               role="tablist"
               aria-label="Blocos temáticos"
             >
@@ -277,7 +301,7 @@ function Index() {
                     role="tab"
                     aria-selected={ativo}
                     onClick={() => setBlocoAtivo(b.id)}
-                    className={`rounded-full border px-4 py-2 text-left text-sm font-semibold transition-colors ${
+                    className={`card-hover rounded-full border px-4 py-2 text-left text-sm font-semibold ${
                       ativo
                         ? "border-primary bg-primary text-primary-foreground"
                         : "border-border bg-card text-muted-foreground hover:text-foreground"
@@ -290,9 +314,11 @@ function Index() {
               })}
             </div>
 
-            <div className="mt-6 rounded-3xl border border-border bg-card p-6 shadow-sm sm:p-8">
-              <h3 className="font-display text-xl font-bold">{bloco.titulo}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
+            <div className="card-hover mx-auto mt-6 max-w-4xl rounded-3xl border border-border bg-card p-6 text-left shadow-sm sm:p-8">
+              <h3 className="text-center font-display text-xl font-bold">
+                {bloco.titulo}
+              </h3>
+              <p className="mt-1 text-center text-sm text-muted-foreground">
                 {bloco.subtitulo}
               </p>
               <ul className="mt-6 divide-y divide-border">
@@ -350,11 +376,11 @@ function Index() {
         </section>
 
         {/* COMO PARTICIPAR */}
-        <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 sm:py-20">
+        <section className={`${CONTAINER} py-16 text-center sm:py-20`}>
           <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
             Como participar
           </h2>
-          <ol className="mt-8 space-y-5">
+          <ol className={`${LEITURA} mt-8 space-y-5 text-left`}>
             {comoParticipar.map((texto, i) => (
               <li key={i} className="flex gap-4">
                 <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary font-display text-sm font-bold text-primary-foreground">
@@ -366,7 +392,7 @@ function Index() {
               </li>
             ))}
           </ol>
-          <p className="mt-8 flex items-center gap-2 text-sm text-muted-foreground">
+          <p className="mt-8 flex items-center justify-center gap-2 text-sm text-muted-foreground">
             <MapPin className="size-4 text-primary" aria-hidden="true" />
             Piloto no Inovabra Habitat, em São Paulo.
           </p>
@@ -374,15 +400,15 @@ function Index() {
 
         {/* FAQ */}
         <section className="border-y border-border bg-surface">
-          <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-20">
+          <div className={`${CONTAINER} py-16 text-center sm:py-20`}>
             <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
               Perguntas frequentes
             </h2>
-            <div className="mt-8 space-y-3">
+            <div className={`${LEITURA} mt-8 space-y-3 text-left`}>
               {faq.map((item) => (
                 <details
                   key={item.p}
-                  className="group rounded-2xl border border-border bg-card p-5"
+                  className="card-hover group rounded-2xl border border-border bg-card p-5"
                 >
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium">
                     {item.p}
@@ -400,17 +426,17 @@ function Index() {
           </div>
         </section>
 
-        {/* CTA FINAL */}
-        <section className="relative overflow-hidden">
+        {/* CTA FINAL — com transição suave para o rodapé */}
+        <section className="relative overflow-hidden bg-gradient-to-b from-background via-background to-surface">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-72 max-w-2xl rounded-full bg-accent blur-3xl opacity-70"
+            className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-72 max-w-2xl rounded-full bg-accent opacity-60 blur-3xl"
           />
-          <div className="relative mx-auto max-w-2xl px-4 py-20 text-center sm:px-6">
+          <div className={`${CONTAINER} relative py-20 text-center`}>
             <h2 className="font-display text-2xl font-bold tracking-tight sm:text-4xl">
               Acompanhe a Série de perto
             </h2>
-            <p className="mt-4 text-base text-muted-foreground">
+            <p className={`${LEITURA} mt-4 text-base text-muted-foreground`}>
               Demonstre seu interesse e receba as novidades assim que as
               primeiras sessões forem confirmadas.
             </p>
@@ -422,9 +448,9 @@ function Index() {
       </main>
 
       {/* RODAPÉ */}
-      <footer className="border-t border-border bg-surface">
-        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
-          <div className="flex items-center gap-2.5">
+      <footer className="relative bg-surface">
+        <div className={`${CONTAINER} py-12 text-center`}>
+          <div className="flex items-center justify-center gap-2.5">
             <img
               src={logo.url}
               alt="100 Open Startups"
@@ -436,7 +462,9 @@ function Index() {
               100 Open Startups
             </span>
           </div>
-          <p className="mt-6 max-w-xl text-xs leading-relaxed text-muted-foreground">
+          <p
+            className={`${LEITURA} mt-6 text-xs leading-relaxed text-muted-foreground`}
+          >
             Ao se inscrever, você concorda com nossos Termos de Uso e Política de
             Privacidade. Seus dados são tratados conforme a LGPD.
           </p>
