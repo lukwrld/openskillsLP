@@ -140,7 +140,33 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+.glass-header {
+  background-color: oklch(1 0 0 / 60%);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+}
+
+.dark .glass-header {
+  background-color: oklch(0.16 0.03 265 / 60%);
+}
+
+.card-hover {
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    border-color 200ms ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in oklab, var(--primary) 45%, transparent);
+  box-shadow:
+    0 18px 40px -18px color-mix(in oklab, var(--primary) 35%, transparent),
+    0 8px 20px -12px oklch(0 0 0 / 18%);
+}
+
 @layer base {
+
   * {
     border-color: var(--color-border);
   }
