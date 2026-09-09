@@ -14,6 +14,10 @@ import {
 
 import logo from "@/assets/100openstartups-logo.png.asset.json";
 import { ThemeToggle } from "@/components/serie/ThemeToggle";
+import {
+  useHeaderTransparency,
+  useRevealOnScroll,
+} from "@/hooks/use-serie-anim";
 import { blocos, competencias, estaConfirmada } from "@/data/programacao";
 
 /**
@@ -70,7 +74,7 @@ function CtaButton({
   return (
     <a
       href={CTA_HREF}
-      className={`inline-flex items-center justify-center gap-2 rounded-full bg-primary font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md ${sizes[size]} ${className}`}
+      className={`cta-glow inline-flex items-center justify-center gap-2 rounded-full bg-primary font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 ${sizes[size]} ${className}`}
     >
       {CTA_LABEL}
       <ArrowRight className="size-4" aria-hidden="true" />
@@ -142,6 +146,8 @@ function Index() {
   const [blocoAtivo, setBlocoAtivo] = useState<string>(blocos[0]!.id);
   const lista = competencias.filter((c) => c.bloco === blocoAtivo);
   const bloco = blocos.find((b) => b.id === blocoAtivo)!;
+  useRevealOnScroll();
+  useHeaderTransparency();
 
   return (
     <div className="relative min-h-screen bg-background text-foreground">
@@ -181,7 +187,7 @@ function Index() {
             <div className="relative mx-auto mb-8 flex w-fit items-center justify-center">
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute size-40 rounded-full bg-primary/25 blur-3xl"
+                className="logo-glow pointer-events-none absolute size-[19rem] rounded-full sm:size-[24rem]"
               />
               <img
                 src={logo.url}
