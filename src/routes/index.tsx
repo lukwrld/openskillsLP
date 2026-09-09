@@ -14,6 +14,10 @@ import {
 
 import logo from "@/assets/100openstartups-logo.png.asset.json";
 import { ThemeToggle } from "@/components/serie/ThemeToggle";
+import {
+  useHeaderTransparency,
+  useRevealOnScroll,
+} from "@/hooks/use-serie-anim";
 import { blocos, competencias, estaConfirmada } from "@/data/programacao";
 
 /**
@@ -70,7 +74,7 @@ function CtaButton({
   return (
     <a
       href={CTA_HREF}
-      className={`inline-flex items-center justify-center gap-2 rounded-full bg-primary font-semibold text-primary-foreground shadow-sm transition-transform hover:-translate-y-0.5 hover:shadow-md ${sizes[size]} ${className}`}
+      className={`cta-glow inline-flex items-center justify-center gap-2 rounded-full bg-primary font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 ${sizes[size]} ${className}`}
     >
       {CTA_LABEL}
       <ArrowRight className="size-4" aria-hidden="true" />
@@ -142,6 +146,8 @@ function Index() {
   const [blocoAtivo, setBlocoAtivo] = useState<string>(blocos[0]!.id);
   const lista = competencias.filter((c) => c.bloco === blocoAtivo);
   const bloco = blocos.find((b) => b.id === blocoAtivo)!;
+  useRevealOnScroll();
+  useHeaderTransparency();
 
   return (
     <div className="relative min-h-screen bg-background text-foreground">
@@ -181,7 +187,7 @@ function Index() {
             <div className="relative mx-auto mb-8 flex w-fit items-center justify-center">
               <span
                 aria-hidden="true"
-                className="pointer-events-none absolute size-40 rounded-full bg-primary/25 blur-3xl"
+                className="logo-glow pointer-events-none absolute size-[19rem] rounded-full sm:size-[24rem]"
               />
               <img
                 src={logo.url}
@@ -216,8 +222,11 @@ function Index() {
 
         {/* O QUE É A SÉRIE */}
         <section className="border-y border-border bg-surface">
-          <div className={`${CONTAINER} py-16 text-center sm:py-20`}>
-            <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
+          <div
+            data-anim
+            className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}
+          >
+            <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl" data-anim>
               O que é a Série
             </h2>
             <div
@@ -243,8 +252,11 @@ function Index() {
         </section>
 
         {/* BENEFÍCIOS */}
-        <section className={`${CONTAINER} py-16 text-center sm:py-20`}>
-          <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
+        <section
+          data-anim
+          className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}
+        >
+          <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl" data-anim>
             O que você ganha
           </h2>
           <div className="mx-auto mt-8 grid max-w-4xl gap-5 sm:grid-cols-2">
@@ -269,8 +281,11 @@ function Index() {
 
         {/* 16 COMPETÊNCIAS E PROGRAMAÇÃO */}
         <section id="programacao" className="border-y border-border bg-surface">
-          <div className={`${CONTAINER} py-16 text-center sm:py-20`}>
-            <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
+          <div
+            data-anim
+            className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}
+          >
+            <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl" data-anim>
               As 16 competências e a programação
             </h2>
             <div
@@ -314,7 +329,10 @@ function Index() {
               })}
             </div>
 
-            <div className="card-hover mx-auto mt-6 max-w-4xl rounded-3xl border border-border bg-card p-6 text-left shadow-sm sm:p-8">
+            <div
+              key={blocoAtivo}
+              className="card-hover fade-swap mx-auto mt-6 max-w-4xl rounded-3xl border border-border bg-card p-6 text-left shadow-sm sm:p-8"
+            >
               <h3 className="text-center font-display text-xl font-bold">
                 {bloco.titulo}
               </h3>
@@ -376,8 +394,11 @@ function Index() {
         </section>
 
         {/* COMO PARTICIPAR */}
-        <section className={`${CONTAINER} py-16 text-center sm:py-20`}>
-          <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
+        <section
+          data-anim
+          className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}
+        >
+          <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl" data-anim>
             Como participar
           </h2>
           <ol className={`${LEITURA} mt-8 space-y-5 text-left`}>
@@ -400,8 +421,11 @@ function Index() {
 
         {/* FAQ */}
         <section className="border-y border-border bg-surface">
-          <div className={`${CONTAINER} py-16 text-center sm:py-20`}>
-            <h2 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
+          <div
+            data-anim
+            className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}
+          >
+            <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl" data-anim>
               Perguntas frequentes
             </h2>
             <div className={`${LEITURA} mt-8 space-y-3 text-left`}>
@@ -433,7 +457,7 @@ function Index() {
             className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-72 max-w-2xl rounded-full bg-accent opacity-60 blur-3xl"
           />
           <div className={`${CONTAINER} relative py-20 text-center`}>
-            <h2 className="font-display text-2xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-4xl" data-anim>
               Acompanhe a Série de perto
             </h2>
             <p className={`${LEITURA} mt-4 text-base text-muted-foreground`}>

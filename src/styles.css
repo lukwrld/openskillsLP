@@ -140,14 +140,137 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 .glass-header {
-  background-color: oklch(1 0 0 / 60%);
-  backdrop-filter: blur(14px) saturate(180%);
-  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  --header-alpha: 60%;
+  background-color: oklch(1 0 0 / var(--header-alpha));
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  transition: background-color 200ms linear;
 }
 
 .dark .glass-header {
-  background-color: oklch(0.16 0.03 265 / 60%);
+  background-color: oklch(0.16 0.03 265 / var(--header-alpha));
+}
+
+/* Glow pulsante atrás do logo do hero */
+.logo-glow {
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--primary) 62%, transparent) 0%,
+    color-mix(in oklab, var(--primary) 32%, transparent) 45%,
+    transparent 72%
+  );
+  filter: blur(44px);
+  animation: logoPulse 3.6s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.14);
+    opacity: 1;
+  }
+}
+
+/* Entrada suave ao rolar */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 700ms ease,
+    transform 700ms ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Linha decorativa animada sob os H2 */
+.h2-line {
+  position: relative;
+  padding-bottom: 0.85rem;
+}
+
+.h2-line::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  height: 2px;
+  width: 0;
+  border-radius: 2px;
+  background-color: var(--primary);
+  transform: translateX(-50%);
+  transition: width 900ms cubic-bezier(0.22, 1, 0.36, 1) 180ms;
+}
+
+.h2-line.is-visible::after {
+  width: 72px;
+}
+
+/* Brilho sutil na borda do CTA principal */
+.cta-glow {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--primary) 40%, transparent),
+    0 0 22px -6px color-mix(in oklab, var(--primary) 55%, transparent),
+    0 6px 18px -12px oklch(0 0 0 / 25%);
+  transition:
+    transform 200ms ease,
+    box-shadow 250ms ease;
+}
+
+.cta-glow:hover {
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--primary) 60%, transparent),
+    0 0 30px -4px color-mix(in oklab, var(--primary) 70%, transparent),
+    0 10px 24px -14px oklch(0 0 0 / 30%);
+}
+
+/* Abertura suave do FAQ e troca de bloco */
+details > *:not(summary) {
+  animation: revealDown 260ms ease;
+}
+
+.fade-swap {
+  animation: revealDown 320ms ease;
+}
+
+@keyframes revealDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .logo-glow,
+  .fade-swap,
+  details > *:not(summary) {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .card-hover {
@@ -164,6 +287,7 @@
     0 18px 40px -18px color-mix(in oklab, var(--primary) 35%, transparent),
     0 8px 20px -12px oklch(0 0 0 / 18%);
 }
+
 
 @layer base {
 
