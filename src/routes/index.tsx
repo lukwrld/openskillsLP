@@ -12,12 +12,9 @@ import {
   Users,
 } from "lucide-react";
 
-import logo from "@/assets/100openstartups-logo.png.asset.json";
 import { ThemeToggle } from "@/components/serie/ThemeToggle";
-import {
-  useHeaderTransparency,
-  useRevealOnScroll,
-} from "@/hooks/use-serie-anim";
+import { ScrollDrivenVideo } from "@/components/serie/ScrollDrivenVideo";
+import { useHeaderScrollState, useRevealOnScroll } from "@/hooks/use-serie-anim";
 import { blocos, competencias, estaConfirmada } from "@/data/programacao";
 
 /**
@@ -26,8 +23,9 @@ import { blocos, competencias, estaConfirmada } from "@/data/programacao";
  * Defina aqui a URL real (página de interesse / formulário oficial) antes de publicar.
  * NÃO reutilizar links de formulários de outros produtos.
  */
-const CTA_HREF = "URL_A_DEFINIR";
+const CTA_HREF = "#interesse";
 const CTA_LABEL = "Quero acompanhar a Série";
+const LOGO_SRC = "/logo_100os_transparent.png";
 
 /** Largura máxima única de container, usada em TODAS as seções. */
 const CONTAINER = "mx-auto w-full max-w-5xl px-4 sm:px-6";
@@ -74,7 +72,8 @@ function CtaButton({
   return (
     <a
       href={CTA_HREF}
-      className={`cta-glow inline-flex items-center justify-center gap-2 rounded-full bg-primary font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 ${sizes[size]} ${className}`}
+      aria-label={CTA_LABEL}
+      className={`${size === "lg" ? "btn-hero-pill" : "btn-solid"} inline-flex items-center justify-center gap-2 bg-primary font-display font-bold text-primary-foreground ${sizes[size]} ${className}`}
     >
       {CTA_LABEL}
       <ArrowRight className="size-4" aria-hidden="true" />
@@ -86,8 +85,7 @@ const beneficios = [
   {
     Icone: Lightbulb,
     titulo: "Aprendizado com casos reais",
-    texto:
-      "Cada sessão parte de uma experiência real, não de teoria genérica.",
+    texto: "Cada sessão parte de uma experiência real, não de teoria genérica.",
   },
   {
     Icone: Mic,
@@ -97,8 +95,7 @@ const beneficios = [
   {
     Icone: Users,
     titulo: "Aplicação prática em sala",
-    texto:
-      "Discussão e exercício aplicado com a turma, não é só palco.",
+    texto: "Discussão e exercício aplicado com a turma, não é só palco.",
   },
   {
     Icone: Award,
@@ -142,15 +139,34 @@ const comoParticipar = [
   "Por enquanto, você pode demonstrar interesse geral pelo botão principal e acompanhar as novidades.",
 ];
 
+function CompetenciasMarquee() {
+  const nomes = competencias.map((competencia) => competencia.nome);
+  return (
+    <div className="marquee -mx-4 mt-12 sm:-mx-6" aria-hidden="true">
+      <div className="marquee__track">
+        {[...nomes, ...nomes].map((nome, indice) => (
+          <span key={`${nome}-${indice}`} className="marquee__item">
+            {nome}
+            <span className="marquee__sep">●</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Index() {
   const [blocoAtivo, setBlocoAtivo] = useState<string>(blocos[0]!.id);
   const lista = competencias.filter((c) => c.bloco === blocoAtivo);
   const bloco = blocos.find((b) => b.id === blocoAtivo)!;
   useRevealOnScroll();
-  useHeaderTransparency();
+  useHeaderScrollState();
 
   return (
     <div className="relative min-h-screen bg-background text-foreground">
+      <a href="#conteudo" className="skip-link">
+        Ir para o conteúdo principal
+      </a>
       {/* DEGRADÊ SUAVE ATRÁS DO HEADER + HERO */}
       <div
         aria-hidden="true"
@@ -158,122 +174,107 @@ function Index() {
       />
 
       {/* HEADER */}
-      <header className="glass-header sticky top-0 z-50">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-          <div className="flex items-center gap-2.5">
+      <header className="site-header sticky top-0 z-40 h-16 border-b border-border">
+        <div className="flex h-full w-full items-center justify-between gap-3 px-5 sm:px-8 lg:px-12">
+          <span className="hdr-spacer hdr-spacer--edge hidden sm:block" aria-hidden="true" />
+          <div className="flex items-center">
             <img
-              src={logo.url}
+              src={LOGO_SRC}
               alt="100 Open Startups"
               className="size-8 shrink-0"
               width={32}
               height={32}
             />
-            <span className="font-display text-sm font-semibold leading-tight sm:text-base">
-              100 Open Startups
-            </span>
           </div>
+          <span className="hdr-spacer hdr-spacer--mid" aria-hidden="true" />
           <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
-            <CtaButton size="sm" className="hidden sm:inline-flex" />
+            <CtaButton size="sm" />
           </div>
+          <span className="hdr-spacer hdr-spacer--edge hidden sm:block" aria-hidden="true" />
         </div>
       </header>
 
-      <main className="relative">
+      <main id="conteudo" className="relative">
         {/* HERO */}
-        <section className="relative">
-          <div className={`${CONTAINER} py-16 text-center sm:py-24`}>
-            {/* Logo grande com glow */}
-            <div className="relative mx-auto mb-8 flex w-fit items-center justify-center">
-              <span
-                aria-hidden="true"
-                className="logo-glow pointer-events-none absolute size-[19rem] rounded-full sm:size-[24rem]"
-              />
-              <img
-                src={logo.url}
-                alt="100 Open Startups"
-                className="relative size-24 sm:size-32"
-                width={128}
-                height={128}
-              />
+        <section className="hero-with-video relative overflow-hidden bg-fx-bg">
+          <ScrollDrivenVideo />
+          <div
+            className="hero-video-overlay pointer-events-none absolute inset-0 z-[1]"
+            aria-hidden="true"
+          />
+          <div className="hero-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+          <div className="relative z-10 mx-auto flex min-h-[32rem] w-full max-w-[1440px] items-center px-6 py-20 sm:px-8 sm:py-28 lg:px-12">
+            <div className="max-w-xl text-left">
+              <h1 className="hero-stagger hero-stagger-3 text-[clamp(2.25rem,5vw,3.5rem)] font-extrabold leading-[1.1]">
+                Série de Competências Empreendedoras
+              </h1>
+              <p className="hero-stagger hero-stagger-4 mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
+                Aprenda competências empreendedoras com quem já viveu isso na prática. Palestras
+                presenciais com founders e executivos, direto dos casos reais do Congresso da 100
+                Open Startups.
+              </p>
+              <div className="hero-stagger hero-stagger-5 mt-9 flex justify-start">
+                <CtaButton size="lg" />
+              </div>
+              <p className="mt-5 flex items-center justify-start gap-2 text-sm text-muted-foreground">
+                <CalendarClock className="size-4 text-primary" aria-hidden="true" />
+                Programação em confirmação
+              </p>
             </div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">
-              100 Open Startups
-            </p>
-            <h1 className="mx-auto mt-4 max-w-3xl font-display text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-6xl">
-              Série de Competências Empreendedoras
-            </h1>
-            <p
-              className={`${LEITURA} mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg`}
-            >
-              Aprenda competências empreendedoras com quem já viveu isso na
-              prática. Palestras presenciais com founders e executivos, direto
-              dos casos reais do Congresso da 100 Open Startups.
-            </p>
-            <div className="mt-9 flex justify-center">
-              <CtaButton size="lg" />
-            </div>
-            <p className="mt-5 flex items-center justify-center gap-2 text-sm text-muted-foreground">
-              <CalendarClock className="size-4 text-primary" aria-hidden="true" />
-              Programação em confirmação
-            </p>
           </div>
         </section>
 
         {/* O QUE É A SÉRIE */}
         <section className="border-y border-border bg-surface">
-          <div
-            data-anim
-            className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}
-          >
-            <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl" data-anim>
+          <div data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
+            <h2
+              className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl"
+              data-anim
+            >
               O que é a Série
             </h2>
             <div
               className={`${LEITURA} mt-6 space-y-5 text-base leading-relaxed text-muted-foreground`}
             >
               <p>
-                A Série de Competências Empreendedoras é um ciclo de palestras
-                presenciais, de 2 horas cada, conduzidas por um founder ou
-                executivo ao lado de uma corporação parceira, sobre uma
-                competência empreendedora específica.
+                A Série de Competências Empreendedoras é um ciclo de palestras presenciais, de 2
+                horas cada, conduzidas por um founder ou executivo ao lado de uma corporação
+                parceira, sobre uma competência empreendedora específica.
               </p>
               <p>
-                Cada sessão parte de um caso real apresentado no Congresso da 100
-                Open Startups, com aplicação prática e discussão com a turma —
-                não é uma palestra motivacional genérica.
+                Cada sessão parte de um caso real apresentado no Congresso da 100 Open Startups, com
+                aplicação prática e discussão com a turma — não é uma palestra motivacional
+                genérica.
               </p>
               <p>
-                O piloto acontece no Inovabra Habitat, com planos de expandir
-                para outras instituições parceiras ao longo do tempo.
+                O piloto acontece no Inovabra Habitat, com planos de expandir para outras
+                instituições parceiras ao longo do tempo.
               </p>
             </div>
           </div>
         </section>
 
         {/* BENEFÍCIOS */}
-        <section
-          data-anim
-          className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}
-        >
-          <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl" data-anim>
+        <section data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
+          <h2
+            className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl"
+            data-anim
+          >
             O que você ganha
           </h2>
           <div className="mx-auto mt-8 grid max-w-4xl gap-5 sm:grid-cols-2">
-            {beneficios.map(({ Icone, titulo, texto }) => (
+            {beneficios.map(({ Icone, titulo, texto }, indice) => (
               <article
                 key={titulo}
-                className="card-hover rounded-2xl border border-border bg-card p-6 text-center shadow-sm"
+                className="card-lift p-6 text-center"
+                style={{ transitionDelay: `${indice * 60}ms` }}
               >
-                <span className="mx-auto flex size-10 items-center justify-center rounded-xl bg-accent text-primary">
+                <span className="entrega-icon mx-auto flex size-10 items-center justify-center rounded-xl bg-accent text-primary">
                   <Icone className="size-5" aria-hidden="true" />
                 </span>
-                <h3 className="mt-4 font-display text-lg font-semibold">
-                  {titulo}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {texto}
-                </p>
+                <h3 className="mt-4 font-display text-lg font-semibold">{titulo}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{texto}</p>
               </article>
             ))}
           </div>
@@ -281,11 +282,11 @@ function Index() {
 
         {/* 16 COMPETÊNCIAS E PROGRAMAÇÃO */}
         <section id="programacao" className="border-y border-border bg-surface">
-          <div
-            data-anim
-            className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}
-          >
-            <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl" data-anim>
+          <div data-anim className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}>
+            <h2
+              className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl"
+              data-anim
+            >
               As 16 competências e a programação
             </h2>
             <div
@@ -293,14 +294,12 @@ function Index() {
             >
               <Info className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
               <p>
-                <strong className="font-semibold">
-                  Programação em confirmação.
-                </strong>{" "}
-                Conforme os convidados forem fechados, esta seção será
-                atualizada com nome, cargo, empresa, data, horário e formato de
-                cada sessão.
+                <strong className="font-semibold">Programação em confirmação.</strong> Conforme os
+                convidados forem fechados, esta seção será atualizada com nome, cargo, empresa,
+                data, horário e formato de cada sessão.
               </p>
             </div>
+            <CompetenciasMarquee />
 
             {/* Abas dos 4 blocos temáticos */}
             <div
@@ -316,7 +315,7 @@ function Index() {
                     role="tab"
                     aria-selected={ativo}
                     onClick={() => setBlocoAtivo(b.id)}
-                    className={`card-hover rounded-full border px-4 py-2 text-left text-sm font-semibold ${
+                    className={`rounded-full border px-4 py-2 text-left text-sm font-semibold transition-colors ${
                       ativo
                         ? "border-primary bg-primary text-primary-foreground"
                         : "border-border bg-card text-muted-foreground hover:text-foreground"
@@ -331,14 +330,10 @@ function Index() {
 
             <div
               key={blocoAtivo}
-              className="card-hover fade-swap mx-auto mt-6 max-w-4xl rounded-3xl border border-border bg-card p-6 text-left shadow-sm sm:p-8"
+              className="bezel-outer fade-swap mx-auto mt-6 max-w-4xl p-6 text-left sm:p-8"
             >
-              <h3 className="text-center font-display text-xl font-bold">
-                {bloco.titulo}
-              </h3>
-              <p className="mt-1 text-center text-sm text-muted-foreground">
-                {bloco.subtitulo}
-              </p>
+              <h3 className="text-center font-display text-xl font-bold">{bloco.titulo}</h3>
+              <p className="mt-1 text-center text-sm text-muted-foreground">{bloco.subtitulo}</p>
               <ul className="mt-6 divide-y divide-border">
                 {lista.map((c) => {
                   const confirmada = estaConfirmada(c);
@@ -354,15 +349,11 @@ function Index() {
                         <div>
                           <p className="font-medium leading-snug">{c.nome}</p>
                           {c.descricao && (
-                            <p className="mt-1 text-sm text-muted-foreground">
-                              {c.descricao}
-                            </p>
+                            <p className="mt-1 text-sm text-muted-foreground">{c.descricao}</p>
                           )}
                           {confirmada && (
                             <p className="mt-1 text-sm text-muted-foreground">
-                              {[c.convidado, c.cargo, c.empresa]
-                                .filter(Boolean)
-                                .join(" · ")}
+                              {[c.convidado, c.cargo, c.empresa].filter(Boolean).join(" · ")}
                             </p>
                           )}
                         </div>
@@ -371,9 +362,7 @@ function Index() {
                         {confirmada ? (
                           <span className="inline-flex items-center gap-1.5 font-medium text-primary">
                             <CheckCircle2 className="size-3.5" aria-hidden="true" />
-                            {[c.data, c.horario, c.formato]
-                              .filter(Boolean)
-                              .join(" · ")}
+                            {[c.data, c.horario, c.formato].filter(Boolean).join(" · ")}
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1.5">
@@ -394,22 +383,25 @@ function Index() {
         </section>
 
         {/* COMO PARTICIPAR */}
-        <section
-          data-anim
-          className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}
-        >
-          <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl" data-anim>
+        <section data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
+          <h2
+            className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl"
+            data-anim
+          >
             Como participar
           </h2>
           <ol className={`${LEITURA} mt-8 space-y-5 text-left`}>
             {comoParticipar.map((texto, i) => (
-              <li key={i} className="flex gap-4">
+              <li
+                key={i}
+                data-anim
+                className="timeline-step reveal flex gap-4"
+                style={{ transitionDelay: `${i * 80}ms` }}
+              >
                 <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary font-display text-sm font-bold text-primary-foreground">
                   {i + 1}
                 </span>
-                <p className="pt-1.5 text-base leading-relaxed text-muted-foreground">
-                  {texto}
-                </p>
+                <p className="pt-1.5 text-base leading-relaxed text-muted-foreground">{texto}</p>
               </li>
             ))}
           </ol>
@@ -421,19 +413,16 @@ function Index() {
 
         {/* FAQ */}
         <section className="border-y border-border bg-surface">
-          <div
-            data-anim
-            className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}
-          >
-            <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl" data-anim>
+          <div data-anim className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}>
+            <h2
+              className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl"
+              data-anim
+            >
               Perguntas frequentes
             </h2>
             <div className={`${LEITURA} mt-8 space-y-3 text-left`}>
               {faq.map((item) => (
-                <details
-                  key={item.p}
-                  className="card-hover group rounded-2xl border border-border bg-card p-5"
-                >
+                <details key={item.p} className="card-lift group p-5">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium">
                     {item.p}
                     <ArrowRight
@@ -441,9 +430,7 @@ function Index() {
                       aria-hidden="true"
                     />
                   </summary>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                    {item.r}
-                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.r}</p>
                 </details>
               ))}
             </div>
@@ -451,18 +438,17 @@ function Index() {
         </section>
 
         {/* CTA FINAL — com transição suave para o rodapé */}
-        <section className="relative overflow-hidden bg-gradient-to-b from-background via-background to-surface">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto h-72 max-w-2xl rounded-full bg-accent opacity-60 blur-3xl"
-          />
+        <section id="interesse" className="relative bg-navy text-navy-foreground">
           <div className={`${CONTAINER} relative py-20 text-center`}>
-            <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-4xl" data-anim>
+            <h2
+              className="editorial-heading font-display text-2xl font-bold tracking-tight sm:text-4xl"
+              data-anim
+            >
               Acompanhe a Série de perto
             </h2>
-            <p className={`${LEITURA} mt-4 text-base text-muted-foreground`}>
-              Demonstre seu interesse e receba as novidades assim que as
-              primeiras sessões forem confirmadas.
+            <p className={`${LEITURA} mt-4 text-base text-navy-foreground/70`}>
+              Garanta seu lugar quando as sessões abrirem. Demonstre seu interesse e receba as
+              novidades assim que as primeiras sessões forem confirmadas.
             </p>
             <div className="mt-8 flex justify-center">
               <CtaButton size="lg" />
@@ -472,27 +458,17 @@ function Index() {
       </main>
 
       {/* RODAPÉ */}
-      <footer className="relative bg-surface">
+      <footer className="relative border-t border-navy-foreground/15 bg-navy text-navy-foreground">
         <div className={`${CONTAINER} py-12 text-center`}>
           <div className="flex items-center justify-center gap-2.5">
-            <img
-              src={logo.url}
-              alt="100 Open Startups"
-              className="size-7"
-              width={28}
-              height={28}
-            />
-            <span className="font-display text-sm font-semibold">
-              100 Open Startups
-            </span>
+            <img src={LOGO_SRC} alt="100 Open Startups" className="size-7" width={28} height={28} />
+            <span className="font-display text-sm font-semibold">100 Open Startups</span>
           </div>
-          <p
-            className={`${LEITURA} mt-6 text-xs leading-relaxed text-muted-foreground`}
-          >
-            Ao se inscrever, você concorda com nossos Termos de Uso e Política de
-            Privacidade. Seus dados são tratados conforme a LGPD.
+          <p className={`${LEITURA} mt-6 text-xs leading-relaxed text-navy-foreground/65`}>
+            Ao se inscrever, você concorda com nossos Termos de Uso e Política de Privacidade. Seus
+            dados são tratados conforme a LGPD.
           </p>
-          <p className="mt-4 text-xs text-muted-foreground">
+          <p className="mt-4 text-xs text-navy-foreground/65">
             © 2026 100 Open Startups. Todos os direitos reservados.
           </p>
         </div>

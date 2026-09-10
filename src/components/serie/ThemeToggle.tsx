@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { Monitor, Moon, Sun } from "lucide-react";
 
 type Tema = "light" | "dark" | "system";
-const CHAVE = "serie-tema";
+const CHAVE = "laudo-theme";
 
 function aplicar(tema: Tema) {
   const escuro =
     tema === "dark" ||
-    (tema === "system" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches);
+    (tema === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
   document.documentElement.classList.toggle("dark", escuro);
 }
 
