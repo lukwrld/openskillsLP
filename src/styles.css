@@ -95,7 +95,9 @@ section[id],
 }
 
 .site-header {
-  background: color-mix(in oklab, var(--background) 92%, transparent);
+  /* Keep the navigation in the same navy used by the dark theme. */
+  background: oklch(0.205 0.03 265 / 92%);
+  border-color: oklch(1 0 0 / 12%);
   backdrop-filter: blur(14px) saturate(150%);
 }
 .hdr-spacer {
@@ -140,6 +142,24 @@ section[id],
   background:
     linear-gradient(
       90deg,
+      color-mix(in oklab, var(--fx-bg) 82%, transparent) 0%,
+      color-mix(in oklab, var(--fx-bg) 62%, transparent) 30%,
+      color-mix(in oklab, var(--navy) 28%, transparent) 48%,
+      color-mix(in oklab, var(--primary) 12%, transparent) 64%,
+      transparent 82%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--fx-bg) 72%, transparent) 0%,
+      transparent 20%,
+      transparent 78%,
+      color-mix(in oklab, var(--fx-bg) 65%, transparent) 100%
+    );
+}
+.dark .hero-video-overlay {
+  background:
+    linear-gradient(
+      90deg,
       var(--fx-bg) 0%,
       color-mix(in oklab, var(--fx-bg) 96%, var(--navy)) 28%,
       color-mix(in oklab, var(--navy) 78%, transparent) 48%,
@@ -157,6 +177,14 @@ section[id],
 .hero-with-video .hero-grid {
   z-index: 2;
   opacity: 0.65;
+}
+.hero-description {
+  color: var(--navy);
+  text-shadow: 0 1px 12px color-mix(in oklab, var(--fx-bg) 72%, transparent);
+}
+.dark .hero-description {
+  color: var(--muted-foreground);
+  text-shadow: 0 1px 12px color-mix(in oklab, var(--fx-bg) 72%, transparent);
 }
 .eyebrow {
   color: var(--primary);
@@ -209,6 +237,7 @@ section[id],
 .bezel-outer {
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
+  height: 100%;
   padding: 0.25rem;
   transition:
     transform 0.2s ease,
@@ -217,6 +246,7 @@ section[id],
 .bezel-inner {
   border-radius: calc(var(--radius-xl) - 2px);
   background: var(--card);
+  height: 100%;
   padding: 1.5rem;
 }
 .card-lift {
@@ -234,6 +264,32 @@ section[id],
   border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
   box-shadow: 0 18px 40px -22px color-mix(in oklab, var(--primary) 60%, transparent);
 }
+.comp-chip {
+  transition:
+    background-color 0.22s ease,
+    color 0.22s ease,
+    transform 0.22s ease;
+}
+.bezel-outer:hover .comp-chip {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  transform: rotate(-4deg);
+}
+.comp-item {
+  transition: color 0.18s ease;
+}
+.comp-item .comp-num {
+  transition:
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+.comp-item:hover {
+  color: var(--foreground);
+}
+.comp-item:hover .comp-num {
+  border-color: var(--primary);
+  color: var(--primary);
+}
 .reveal {
   opacity: 0;
   transform: translateY(12px);
@@ -244,6 +300,9 @@ section[id],
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+}
+.bezel-outer.reveal.is-visible:hover {
+  transform: translateY(-2px);
 }
 .fade-swap {
   animation: revealDown 0.32s ease;

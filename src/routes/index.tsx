@@ -1,21 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import {
   ArrowRight,
   Award,
   CalendarClock,
-  CheckCircle2,
   Info,
+  LineChart,
   Lightbulb,
   MapPin,
   Mic,
+  Target,
   Users,
+  Zap,
 } from "lucide-react";
 
 import { ThemeToggle } from "@/components/serie/ThemeToggle";
 import { ScrollDrivenVideo } from "@/components/serie/ScrollDrivenVideo";
 import { useHeaderScrollState, useRevealOnScroll } from "@/hooks/use-serie-anim";
-import { blocos, competencias, estaConfirmada } from "@/data/programacao";
+import { blocos, competencias } from "@/data/programacao";
 
 /**
  * ⚠️ PENDENTE ANTES DA PUBLICAÇÃO ⚠️
@@ -31,6 +32,7 @@ const LOGO_SRC = "/logo_100os_transparent.png";
 const CONTAINER = "mx-auto w-full max-w-5xl px-4 sm:px-6";
 /** Largura máxima confortável de leitura para texto corrido, listas e FAQ. */
 const LEITURA = "mx-auto w-full max-w-[680px]";
+const blocoIcons = [Target, Zap, Users, LineChart];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -156,9 +158,6 @@ function CompetenciasMarquee() {
 }
 
 function Index() {
-  const [blocoAtivo, setBlocoAtivo] = useState<string>(blocos[0]!.id);
-  const lista = competencias.filter((c) => c.bloco === blocoAtivo);
-  const bloco = blocos.find((b) => b.id === blocoAtivo)!;
   useRevealOnScroll();
   useHeaderScrollState();
 
@@ -209,7 +208,7 @@ function Index() {
               <h1 className="hero-stagger hero-stagger-3 text-[clamp(2.25rem,5vw,3.5rem)] font-extrabold leading-[1.1]">
                 Série de Competências Empreendedoras
               </h1>
-              <p className="hero-stagger hero-stagger-4 mt-6 text-base leading-relaxed text-muted-foreground sm:text-lg">
+              <p className="hero-description hero-stagger hero-stagger-4 mt-6 text-base leading-relaxed sm:text-lg">
                 Aprenda competências empreendedoras com quem já viveu isso na prática. Palestras
                 presenciais com founders e executivos, direto dos casos reais do Congresso da 100
                 Open Startups.
@@ -282,10 +281,9 @@ function Index() {
 
         {/* 16 COMPETÊNCIAS E PROGRAMAÇÃO */}
         <section id="programacao" className="border-y border-border bg-surface">
-          <div data-anim className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}>
+          <div className={`${CONTAINER} py-16 sm:py-20`}>
             <h2
-              className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl"
-              data-anim
+              className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl"
             >
               As 16 competências e a programação
             </h2>
@@ -299,86 +297,41 @@ function Index() {
                 data, horário e formato de cada sessão.
               </p>
             </div>
-            <CompetenciasMarquee />
-
-            {/* Abas dos 4 blocos temáticos */}
-            <div
-              className="mt-8 flex flex-wrap justify-center gap-2"
-              role="tablist"
-              aria-label="Blocos temáticos"
-            >
-              {blocos.map((b, i) => {
-                const ativo = b.id === blocoAtivo;
+            <div className="mt-8 grid gap-4 text-left sm:grid-cols-2">
+              {blocos.map((bloco, indice) => {
+                const Icon = blocoIcons[indice] ?? Target;
+                const itens = competencias.filter((competencia) => competencia.bloco === bloco.id);
                 return (
-                  <button
-                    key={b.id}
-                    role="tab"
-                    aria-selected={ativo}
-                    onClick={() => setBlocoAtivo(b.id)}
-                    className={`rounded-full border px-4 py-2 text-left text-sm font-semibold transition-colors ${
-                      ativo
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : "border-border bg-card text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    <span className="opacity-70">Bloco {i + 1} — </span>
-                    {b.titulo}
-                  </button>
+                  <article key={bloco.id} data-anim className="bezel-outer reveal">
+                    <div className="bezel-inner">
+                      <div className="flex items-center gap-3">
+                        <span className="comp-chip flex size-9 items-center justify-center rounded-md bg-accent text-primary">
+                          <Icon className="size-4" aria-hidden="true" />
+                        </span>
+                        <h3 className="text-xs font-bold uppercase tracking-[0.09em] text-primary">
+                          Bloco {indice + 1} — {bloco.titulo}
+                        </h3>
+                      </div>
+                      <p className="mt-4 text-lg font-bold text-foreground">{bloco.subtitulo}</p>
+                      <ol className="mt-4 space-y-2.5">
+                        {itens.map((competencia) => (
+                          <li
+                            key={competencia.id}
+                            className="comp-item flex items-center gap-3 text-sm text-muted-foreground"
+                          >
+                            <span className="comp-num flex size-6 shrink-0 items-center justify-center rounded-full border border-border text-xs font-semibold text-foreground">
+                              {competencia.id}
+                            </span>
+                            {competencia.nome}
+                          </li>
+                        ))}
+                      </ol>
+                    </div>
+                  </article>
                 );
               })}
             </div>
-
-            <div
-              key={blocoAtivo}
-              className="bezel-outer fade-swap mx-auto mt-6 max-w-4xl p-6 text-left sm:p-8"
-            >
-              <h3 className="text-center font-display text-xl font-bold">{bloco.titulo}</h3>
-              <p className="mt-1 text-center text-sm text-muted-foreground">{bloco.subtitulo}</p>
-              <ul className="mt-6 divide-y divide-border">
-                {lista.map((c) => {
-                  const confirmada = estaConfirmada(c);
-                  return (
-                    <li
-                      key={c.id}
-                      className="flex flex-col gap-1.5 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
-                    >
-                      <div className="flex items-start gap-3">
-                        <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-primary">
-                          {c.id}
-                        </span>
-                        <div>
-                          <p className="font-medium leading-snug">{c.nome}</p>
-                          {c.descricao && (
-                            <p className="mt-1 text-sm text-muted-foreground">{c.descricao}</p>
-                          )}
-                          {confirmada && (
-                            <p className="mt-1 text-sm text-muted-foreground">
-                              {[c.convidado, c.cargo, c.empresa].filter(Boolean).join(" · ")}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                      <p className="shrink-0 pl-9 text-xs text-muted-foreground sm:pl-0 sm:text-right">
-                        {confirmada ? (
-                          <span className="inline-flex items-center gap-1.5 font-medium text-primary">
-                            <CheckCircle2 className="size-3.5" aria-hidden="true" />
-                            {[c.data, c.horario, c.formato].filter(Boolean).join(" · ")}
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1.5">
-                            <span
-                              className="size-1.5 rounded-full bg-muted-foreground/60"
-                              aria-hidden="true"
-                            />
-                            Convidado e data em confirmação
-                          </span>
-                        )}
-                      </p>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+            <CompetenciasMarquee />
           </div>
         </section>
 
