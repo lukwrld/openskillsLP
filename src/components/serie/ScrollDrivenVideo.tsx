@@ -25,7 +25,13 @@ export function ScrollDrivenVideo() {
     let playing = false;
     let lastFrameAt = 0;
     let pageVisible = !document.hidden;
+    let heroVisible = true;
+    let canvasWidth = 0;
+    let canvasHeight = 0;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const isMobile = window.matchMedia("(max-width: 639px)").matches;
+    const initialFrames = isMobile ? 3 : 8;
+    const preloadAhead = isMobile ? 8 : PRELOAD_AHEAD;
 
     const loadFrame = (index: number) => {
       if (images[index]) return Promise.resolve(images[index]!);
@@ -33,6 +39,7 @@ export function ScrollDrivenVideo() {
       pending[index] = new Promise<HTMLImageElement>((resolve, reject) => {
         const image = new Image();
         image.decoding = "async";
+        image.fetchPriority = index === 0 ? "high" : "low";
         image.onload = () => {
           images[index] = image;
           resolve(image);
@@ -43,7 +50,7 @@ export function ScrollDrivenVideo() {
       return pending[index]!;
     };
 
-    const warmFrames = (from: number, count = PRELOAD_AHEAD) => {
+    const warmFrames = (from: number, count = preloadAhead) => {
       for (let offset = 0; offset < count; offset += 1) {
         const index = (from + offset) % FRAME_COUNT;
         void loadFrame(index).catch(() => undefined);
@@ -53,8 +60,9 @@ export function ScrollDrivenVideo() {
     const draw = (target: number) => {
       const image = images[target];
       if (!image?.naturalWidth) return false;
-      const width = wrapper.clientWidth;
-      const height = wrapper.clientHeight;
+      const width = canvasWidth;
+      const height = canvasHeight;
+      if (!width || !height) return false;
       const imageRatio = image.naturalWidth / image.naturalHeight;
       const boxRatio = width / height;
       const drawWidth = imageRatio > boxRatio ? height * imageRatio : width;
@@ -73,17 +81,19 @@ export function ScrollDrivenVideo() {
 
     const resize = () => {
       const bounds = wrapper.getBoundingClientRect();
+      canvasWidth = Math.max(1, Math.round(bounds.width));
+      canvasHeight = Math.max(1, Math.round(bounds.height));
       const ratio = Math.min(window.devicePixelRatio || 1, 1.5);
-      canvas.width = Math.max(1, Math.round(bounds.width * ratio));
-      canvas.height = Math.max(1, Math.round(bounds.height * ratio));
-      canvas.style.width = `${bounds.width}px`;
-      canvas.style.height = `${bounds.height}px`;
+      canvas.width = Math.round(canvasWidth * ratio);
+      canvas.height = Math.round(canvasHeight * ratio);
+      canvas.style.width = `${canvasWidth}px`;
+      canvas.style.height = `${canvasHeight}px`;
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
       draw(activeFrame);
     };
 
     const play = (now: number) => {
-      if (!playing || !pageVisible) return;
+      if (!playing || !pageVisible || !heroVisible) return;
       if (!lastFrameAt) lastFrameAt = now;
       if (now - lastFrameAt >= 1000 / FRAME_RATE) {
         const nextFrame = (activeFrame + 1) % FRAME_COUNT;
@@ -101,8 +111,8 @@ export function ScrollDrivenVideo() {
     const beginPlayback = async () => {
       if (started || reducedMotion) return;
       started = true;
-      warmFrames(0);
-      await Promise.all(Array.from({ length: 8 }, (_, index) => loadFrame(index))).catch(
+      warmFrames(0, initialFrames);
+      await Promise.all(Array.from({ length: initialFrames }, (_, index) => loadFrame(index))).catch(
         () => undefined,
       );
       playing = true;
@@ -112,7 +122,7 @@ export function ScrollDrivenVideo() {
 
     const onVisibilityChange = () => {
       pageVisible = !document.hidden;
-      if (pageVisible && playing) {
+      if (pageVisible && heroVisible && playing) {
         lastFrameAt = 0;
         animationFrame = requestAnimationFrame(play);
       } else {
@@ -120,8 +130,22 @@ export function ScrollDrivenVideo() {
       }
     };
 
+    const inViewObserver = new IntersectionObserver(
+      ([entry]) => {
+        heroVisible = entry.isIntersecting;
+        if (heroVisible && pageVisible && playing) {
+          lastFrameAt = 0;
+          animationFrame = requestAnimationFrame(play);
+        } else {
+          cancelAnimationFrame(animationFrame);
+        }
+      },
+      { threshold: 0 },
+    );
+
     const observer = new ResizeObserver(resize);
     observer.observe(wrapper);
+    inViewObserver.observe(wrapper);
     document.addEventListener("visibilitychange", onVisibilityChange);
     void loadFrame(0).then(() => {
       resize();
@@ -133,6 +157,7 @@ export function ScrollDrivenVideo() {
       playing = false;
       cancelAnimationFrame(animationFrame);
       observer.disconnect();
+      inViewObserver.disconnect();
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
   }, []);

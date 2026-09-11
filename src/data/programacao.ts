@@ -1,27 +1,3 @@
-/**
- * DADOS DA PROGRAMAÇÃO — Série de Competências Empreendedoras
- * =========================================================================
- * Este é o ÚNICO arquivo que precisa ser editado para atualizar a
- * programação. Os componentes visuais leem daqui e mostram automaticamente
- * o estado "Convidado e data em confirmação" enquanto os campos estiverem
- * vazios (null).
- *
- * Campos de cada competência:
- * - id          número da competência (1 a 16), na ordem oficial
- * - bloco       id do bloco temático ao qual a competência pertence
- * - nome        nome oficial da competência (já confirmado, sempre visível)
- * - descricao   descrição da sessão (null enquanto não confirmada)
- * - convidado   nome do founder/executivo (null enquanto não confirmado)
- * - cargo       cargo do convidado (null enquanto não confirmado)
- * - empresa     empresa/corporação parceira (null enquanto não confirmada)
- * - foto        URL da foto do convidado (null enquanto não confirmada)
- * - data        data da sessão, ex: "12/03/2026" (null enquanto não confirmada)
- * - horario     horário, ex: "19h às 21h" (null enquanto não confirmado)
- * - formato     formato, ex: "Presencial — Inovabra Habitat" (null se não confirmado)
- *
- * Basta trocar null pelo texto real; o card passa a exibir os dados sozinho.
- */
-
 export type Competencia = {
   id: number;
   bloco: string;
@@ -36,24 +12,12 @@ export type Competencia = {
   formato: string | null;
 };
 
-export type Bloco = {
-  id: string;
-  titulo: string;
-  subtitulo: string;
-};
+export type Bloco = { id: string; titulo: string; subtitulo: string };
 
 export const blocos: Bloco[] = [
   { id: "eu", titulo: "EU", subtitulo: "Construir a si mesmo" },
-  {
-    id: "oportunidade",
-    titulo: "Oportunidade e Ação",
-    subtitulo: "Ler o mundo e agir",
-  },
-  {
-    id: "pessoas",
-    titulo: "Pessoas e Relações",
-    subtitulo: "Construir com outros",
-  },
+  { id: "oportunidade", titulo: "Oportunidade e Ação", subtitulo: "Ler o mundo e agir" },
+  { id: "pessoas", titulo: "Pessoas e Relações", subtitulo: "Construir com outros" },
   {
     id: "recursos",
     titulo: "Recursos, Valor e Responsabilidade",
@@ -86,17 +50,11 @@ export const competencias: Competencia[] = [
   { id: 11, bloco: "pessoas", nome: "Comunicar, persuadir e vender", ...vazio },
   { id: 12, bloco: "pessoas", nome: "Escalar e liderar", ...vazio },
   { id: 13, bloco: "recursos", nome: "Mobilizar recursos", ...vazio },
-  {
-    id: 14,
-    bloco: "recursos",
-    nome: "Literacia financeira e econômica",
-    ...vazio,
-  },
+  { id: 14, bloco: "recursos", nome: "Literacia financeira e econômica", ...vazio },
   { id: 15, bloco: "recursos", nome: "Pensamento digital e IA", ...vazio },
   { id: 16, bloco: "recursos", nome: "Pensamento ético e sustentável", ...vazio },
 ];
 
-/** Uma sessão só é considerada confirmada quando tem convidado e data. */
 export function estaConfirmada(c: Competencia): boolean {
   return Boolean(c.convidado && c.data);
 }

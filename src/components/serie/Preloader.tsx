@@ -4,7 +4,7 @@ const LOGO_SRC = "/logo_100os_transparent.png";
 
 const ENTRANCE_MS = 500;
 const HOLD_MS = 350;
-const EXPAND_MS = 1500;
+const EXPAND_MS = 1000;
 
 /** Clean brand intro shown while the page boots: small logo grows and dissolves smoothly. */
 export function Preloader() {

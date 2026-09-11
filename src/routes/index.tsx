@@ -4,8 +4,8 @@ import {
   Award,
   CalendarClock,
   Info,
-  LineChart,
   Lightbulb,
+  LineChart,
   MapPin,
   Mic,
   Target,
@@ -14,23 +14,20 @@ import {
 } from "lucide-react";
 
 import { ThemeToggle } from "@/components/serie/ThemeToggle";
+import { CookieSettingsButton } from "@/components/privacy/CookieConsent";
 import { ScrollDrivenVideo } from "@/components/serie/ScrollDrivenVideo";
-import { useHeaderScrollState, useRevealOnScroll } from "@/hooks/use-serie-anim";
+import { ProgramacaoCarousel } from "@/components/serie/ProgramacaoCarousel";
+import {
+  useCompetenciasStage,
+  useHeaderScrollState,
+  useRevealOnScroll,
+} from "@/hooks/use-serie-anim";
 import { blocos, competencias } from "@/data/programacao";
 
-/**
- * ⚠️ PENDENTE ANTES DA PUBLICAÇÃO ⚠️
- * Destino de TODOS os botões de CTA desta página.
- * Defina aqui a URL real (página de interesse / formulário oficial) antes de publicar.
- * NÃO reutilizar links de formulários de outros produtos.
- */
 const CTA_HREF = "#interesse";
 const CTA_LABEL = "Quero acompanhar a Série";
 const LOGO_SRC = "/logo_100os_transparent.png";
-
-/** Largura máxima única de container, usada em TODAS as seções. */
 const CONTAINER = "mx-auto w-full max-w-5xl px-4 sm:px-6";
-/** Largura máxima confortável de leitura para texto corrido, listas e FAQ. */
 const LEITURA = "mx-auto w-full max-w-[680px]";
 const blocoIcons = [Target, Zap, Users, LineChart];
 
@@ -43,17 +40,6 @@ export const Route = createFileRoute("/")({
         content:
           "Ciclo de palestras presenciais com founders e executivos sobre as 16 competências empreendedoras, a partir de casos reais do Congresso da 100 Open Startups.",
       },
-      {
-        property: "og:title",
-        content: "Série de Competências Empreendedoras | 100 Open Startups",
-      },
-      {
-        property: "og:description",
-        content:
-          "Palestras presenciais de 2 horas com quem viveu o caso na prática. Programação em confirmação.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Index,
@@ -66,11 +52,7 @@ function CtaButton({
   className?: string;
   size?: "sm" | "md" | "lg";
 }) {
-  const sizes = {
-    sm: "px-4 py-2 text-sm",
-    md: "px-5 py-2.5 text-sm",
-    lg: "px-7 py-3.5 text-base",
-  };
+  const sizes = { sm: "px-4 py-2 text-sm", md: "px-5 py-2.5 text-sm", lg: "px-7 py-3.5 text-base" };
   return (
     <a
       href={CTA_HREF}
@@ -106,7 +88,6 @@ const beneficios = [
       "Participar das 16 competências do curso introdutório completo dá direito ao certificado de conclusão — ele atesta percurso e conhecimento do mapa de competências, não proficiência.",
   },
 ];
-
 const faq = [
   {
     p: "O que é a Série de Competências Empreendedoras?",
@@ -133,7 +114,6 @@ const faq = [
     r: "Assim que a programação completa estiver publicada, cada sessão terá inscrição própria. Por enquanto, use o botão principal para acompanhar novidades.",
   },
 ];
-
 const comoParticipar = [
   "Participação presencial, em sessões de 2 horas. O piloto acontece no Inovabra Habitat.",
   "Um convidado — founder ou executivo — por competência, ligado a um caso do Congresso da 100 Open Startups.",
@@ -160,31 +140,26 @@ function CompetenciasMarquee() {
 function Index() {
   useRevealOnScroll();
   useHeaderScrollState();
-
+  useCompetenciasStage();
   return (
     <div className="relative min-h-screen bg-background text-foreground">
       <a href="#conteudo" className="skip-link">
         Ir para o conteúdo principal
       </a>
-      {/* DEGRADÊ SUAVE ATRÁS DO HEADER + HERO */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-[560px] bg-gradient-to-b from-accent via-accent/40 to-transparent"
       />
-
-      {/* HEADER */}
       <header className="site-header sticky top-0 z-40 h-16 border-b border-border">
         <div className="flex h-full w-full items-center justify-between gap-3 px-5 sm:px-8 lg:px-12">
           <span className="hdr-spacer hdr-spacer--edge hidden sm:block" aria-hidden="true" />
-          <div className="flex items-center">
-            <img
-              src={LOGO_SRC}
-              alt="100 Open Startups"
-              className="size-8 shrink-0"
-              width={32}
-              height={32}
-            />
-          </div>
+          <img
+            src={LOGO_SRC}
+            alt="100 Open Startups"
+            className="size-8 shrink-0"
+            width={32}
+            height={32}
+          />
           <span className="hdr-spacer hdr-spacer--mid" aria-hidden="true" />
           <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
@@ -193,9 +168,7 @@ function Index() {
           <span className="hdr-spacer hdr-spacer--edge hidden sm:block" aria-hidden="true" />
         </div>
       </header>
-
       <main id="conteudo" className="relative">
-        {/* HERO */}
         <section className="hero-with-video relative overflow-hidden bg-fx-bg">
           <ScrollDrivenVideo />
           <div
@@ -217,20 +190,15 @@ function Index() {
                 <CtaButton size="lg" />
               </div>
               <p className="mt-5 flex items-center justify-start gap-2 text-sm text-muted-foreground">
-                <CalendarClock className="size-4 text-primary" aria-hidden="true" />
+                <CalendarClock className="size-4 text-primary" />
                 Programação em confirmação
               </p>
             </div>
           </div>
         </section>
-
-        {/* O QUE É A SÉRIE */}
         <section className="border-y border-border bg-surface">
           <div data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
-            <h2
-              className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl"
-              data-anim
-            >
+            <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
               O que é a Série
             </h2>
             <div
@@ -253,13 +221,42 @@ function Index() {
             </div>
           </div>
         </section>
-
-        {/* BENEFÍCIOS */}
+        <section data-anim className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}>
+          <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
+            Para quem é
+          </h2>
+          <p className={`${LEITURA} mt-6 text-base leading-relaxed text-muted-foreground`}>
+            Para universitários de qualquer curso que querem desenvolver competências para criar,
+            decidir, comunicar, liderar e executar melhor — mesmo sem ter uma startup ou experiência
+            empreendendo. Você pode estar começando a graduação, entrando no mercado ou participando
+            de projetos e comunidades.
+          </p>
+        </section>
+        <section className="border-y border-border bg-surface">
+          <div data-anim className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}>
+            <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
+              Como funciona cada encontro
+            </h2>
+            <div className={`${LEITURA} mt-6 grid gap-4 text-left sm:grid-cols-4`}>
+              {[
+                ["Caso real", "O contexto e o desafio."],
+                ["Decisões", "Escolhas, erros e trade-offs."],
+                ["Discussão", "Perguntas e conversa com a turma."],
+                ["Aplicação", "Exercício para levar à prática."],
+              ].map(([titulo, texto], index) => (
+                <article key={titulo} className="card-lift p-5">
+                  <span className="flex size-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+                    {index + 1}
+                  </span>
+                  <h3 className="mt-4 font-display font-semibold">{titulo}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{texto}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
         <section data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
-          <h2
-            className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl"
-            data-anim
-          >
+          <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
             O que você ganha
           </h2>
           <div className="mx-auto mt-8 grid max-w-4xl gap-5 sm:grid-cols-2">
@@ -270,7 +267,7 @@ function Index() {
                 style={{ transitionDelay: `${indice * 60}ms` }}
               >
                 <span className="entrega-icon mx-auto flex size-10 items-center justify-center rounded-xl bg-accent text-primary">
-                  <Icone className="size-5" aria-hidden="true" />
+                  <Icone className="size-5" />
                 </span>
                 <h3 className="mt-4 font-display text-lg font-semibold">{titulo}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{texto}</p>
@@ -278,69 +275,86 @@ function Index() {
             ))}
           </div>
         </section>
-
-        {/* 16 COMPETÊNCIAS E PROGRAMAÇÃO */}
-        <section id="programacao" className="border-y border-border bg-surface">
+        <section className="border-y border-border bg-surface">
           <div className={`${CONTAINER} py-16 sm:py-20`}>
-            <h2
-              className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl"
-            >
-              As 16 competências e a programação
+            <h2 className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
+              As 16 competências
             </h2>
-            <div
-              className={`${LEITURA} mt-5 flex items-start gap-3 rounded-2xl border border-primary/25 bg-accent/60 p-4 text-left text-sm leading-relaxed text-foreground`}
-            >
-              <Info className="mt-0.5 size-4 shrink-0 text-primary" aria-hidden="true" />
-              <p>
-                <strong className="font-semibold">Programação em confirmação.</strong> Conforme os
-                convidados forem fechados, esta seção será atualizada com nome, cargo, empresa,
-                data, horário e formato de cada sessão.
-              </p>
-            </div>
-            <div className="mt-8 grid gap-4 text-left sm:grid-cols-2">
-              {blocos.map((bloco, indice) => {
-                const Icon = blocoIcons[indice] ?? Target;
-                const itens = competencias.filter((competencia) => competencia.bloco === bloco.id);
-                return (
-                  <article key={bloco.id} data-anim className="bezel-outer reveal">
-                    <div className="bezel-inner">
-                      <div className="flex items-center gap-3">
-                        <span className="comp-chip flex size-9 items-center justify-center rounded-md bg-accent text-primary">
-                          <Icon className="size-4" aria-hidden="true" />
-                        </span>
-                        <h3 className="text-xs font-bold uppercase tracking-[0.09em] text-primary">
-                          Bloco {indice + 1} — {bloco.titulo}
-                        </h3>
+            <div className="competencias-stage">
+              <span
+                aria-hidden="true"
+                data-competency-trigger="2"
+                className="competencias-trigger trigger-one"
+              />
+              <span
+                aria-hidden="true"
+                data-competency-trigger="4"
+                className="competencias-trigger trigger-two"
+              />
+              <div className="competencias-sticky mt-8 grid gap-5 text-left sm:grid-cols-2">
+                {blocos.map((bloco, indice) => {
+                  const Icon = blocoIcons[indice] ?? Target;
+                  const itens = competencias.filter(
+                    (competencia) => competencia.bloco === bloco.id,
+                  );
+                  return (
+                    <article
+                      key={bloco.id}
+                      data-anim
+                      data-competency-card
+                      className="bezel-outer competency-card reveal"
+                    >
+                      <div className="bezel-inner">
+                        <div className="flex items-center gap-3">
+                          <span className="comp-chip flex size-9 items-center justify-center rounded-md bg-accent text-primary">
+                            <Icon className="size-4" />
+                          </span>
+                          <h3 className="text-xs font-bold uppercase tracking-[0.09em] text-primary">
+                            Bloco {indice + 1} — {bloco.titulo}
+                          </h3>
+                        </div>
+                        <p className="mt-4 text-lg font-bold text-foreground">{bloco.subtitulo}</p>
+                        <ol className="mt-4 space-y-2.5">
+                          {itens.map((competencia) => (
+                            <li
+                              key={competencia.id}
+                              className="comp-item flex items-center gap-3 text-sm text-muted-foreground"
+                              style={{ transitionDelay: `${(competencia.id % 4) * 55}ms` }}
+                            >
+                              <span className="comp-num flex size-6 shrink-0 items-center justify-center rounded-full border border-border text-xs font-semibold text-foreground">
+                                {competencia.id}
+                              </span>
+                              {competencia.nome}
+                            </li>
+                          ))}
+                        </ol>
                       </div>
-                      <p className="mt-4 text-lg font-bold text-foreground">{bloco.subtitulo}</p>
-                      <ol className="mt-4 space-y-2.5">
-                        {itens.map((competencia) => (
-                          <li
-                            key={competencia.id}
-                            className="comp-item flex items-center gap-3 text-sm text-muted-foreground"
-                          >
-                            <span className="comp-num flex size-6 shrink-0 items-center justify-center rounded-full border border-border text-xs font-semibold text-foreground">
-                              {competencia.id}
-                            </span>
-                            {competencia.nome}
-                          </li>
-                        ))}
-                      </ol>
-                    </div>
-                  </article>
-                );
-              })}
+                    </article>
+                  );
+                })}
+              </div>
             </div>
             <CompetenciasMarquee />
           </div>
         </section>
-
-        {/* COMO PARTICIPAR */}
-        <section data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
-          <h2
-            className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl"
-            data-anim
+        <section id="programacao" className={`${CONTAINER} py-20 text-center sm:py-24`}>
+          <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
+            Programação
+          </h2>
+          <div
+            className={`${LEITURA} mt-6 flex items-start gap-3 rounded-2xl border border-primary/25 bg-accent/60 p-4 text-left text-sm leading-relaxed text-foreground`}
           >
+            <Info className="mt-0.5 size-4 shrink-0 text-primary" />
+            <p>
+              <strong className="font-semibold">Programação em confirmação.</strong> Conforme os
+              convidados forem fechados, esta seção será atualizada com nome, cargo, empresa, data,
+              horário e formato de cada sessão.
+            </p>
+          </div>
+          <ProgramacaoCarousel competencias={competencias} blocos={blocos} />
+        </section>
+        <section data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
+          <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
             Como participar
           </h2>
           <ol className={`${LEITURA} mt-8 space-y-5 text-left`}>
@@ -359,18 +373,13 @@ function Index() {
             ))}
           </ol>
           <p className="mt-8 flex items-center justify-center gap-2 text-sm text-muted-foreground">
-            <MapPin className="size-4 text-primary" aria-hidden="true" />
+            <MapPin className="size-4 text-primary" />
             Piloto no Inovabra Habitat, em São Paulo.
           </p>
         </section>
-
-        {/* FAQ */}
         <section className="border-y border-border bg-surface">
           <div data-anim className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}>
-            <h2
-              className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl"
-              data-anim
-            >
+            <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
               Perguntas frequentes
             </h2>
             <div className={`${LEITURA} mt-8 space-y-3 text-left`}>
@@ -378,10 +387,7 @@ function Index() {
                 <details key={item.p} className="card-lift group p-5">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-medium">
                     {item.p}
-                    <ArrowRight
-                      className="size-4 shrink-0 text-primary transition-transform group-open:rotate-90"
-                      aria-hidden="true"
-                    />
+                    <ArrowRight className="size-4 shrink-0 text-primary transition-transform group-open:rotate-90" />
                   </summary>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.r}</p>
                 </details>
@@ -389,14 +395,9 @@ function Index() {
             </div>
           </div>
         </section>
-
-        {/* CTA FINAL — com transição suave para o rodapé */}
         <section id="interesse" className="relative bg-navy text-navy-foreground">
           <div className={`${CONTAINER} relative py-20 text-center`}>
-            <h2
-              className="editorial-heading font-display text-2xl font-bold tracking-tight sm:text-4xl"
-              data-anim
-            >
+            <h2 className="editorial-heading font-display text-2xl font-bold tracking-tight sm:text-4xl">
               Acompanhe a Série de perto
             </h2>
             <p className={`${LEITURA} mt-4 text-base text-navy-foreground/70`}>
@@ -409,8 +410,6 @@ function Index() {
           </div>
         </section>
       </main>
-
-      {/* RODAPÉ */}
       <footer className="relative border-t border-navy-foreground/15 bg-navy text-navy-foreground">
         <div className={`${CONTAINER} py-12 text-center`}>
           <div className="flex items-center justify-center gap-2.5">
@@ -418,9 +417,25 @@ function Index() {
             <span className="font-display text-sm font-semibold">100 Open Startups</span>
           </div>
           <p className={`${LEITURA} mt-6 text-xs leading-relaxed text-navy-foreground/65`}>
-            Ao se inscrever, você concorda com nossos Termos de Uso e Política de Privacidade. Seus
-            dados são tratados conforme a LGPD.
+            Ao se inscrever, você concorda com nossos{" "}
+            <a href="/termos" className="link-underline">
+              Termos de Uso
+            </a>{" "}
+            e{" "}
+            <a href="/privacidade" className="link-underline">
+              Política de Privacidade
+            </a>
+            . Seus dados são tratados conforme a LGPD.
           </p>
+          <div className="mt-4 flex justify-center gap-4 text-xs text-navy-foreground/65">
+            <a href="/termos" className="link-underline">
+              Termos de Uso
+            </a>
+            <a href="/privacidade" className="link-underline">
+              Política de Privacidade
+            </a>
+            <CookieSettingsButton className="link-underline cursor-pointer" />
+          </div>
           <p className="mt-4 text-xs text-navy-foreground/65">
             © 2026 100 Open Startups. Todos os direitos reservados.
           </p>
