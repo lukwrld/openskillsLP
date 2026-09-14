@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 import type { Bloco, Competencia } from "@/data/programacao";
 
@@ -71,13 +71,25 @@ export function ProgramacaoCarousel({ competencias, blocos }: ProgramacaoCarouse
                 alt="Palestrante em confirmação"
                 className="absolute inset-0 h-full w-full object-cover object-center"
               />
-              <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end bg-gradient-to-t from-black/85 via-black/45 to-transparent p-5 pt-16">
+              <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/60 to-transparent p-5 pt-20">
                 <p className="text-xs font-bold uppercase tracking-[0.09em] text-white/75">
                   {bloco?.titulo}
                 </p>
                 <h3 className="mt-2 font-display text-lg font-bold leading-tight text-white">
                   {competencia.nome}
                 </h3>
+                {isCurrent && (
+                  <button
+                    type="button"
+                    disabled
+                    title="Inscrições em breve"
+                    className="btn-solid mt-4 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-lg bg-primary px-3 py-2 text-xs font-bold text-primary-foreground opacity-90"
+                  >
+                    Quero me inscrever
+                    <ArrowRight className="size-3.5" aria-hidden="true" />
+                  </button>
+                )}
+                {isCurrent && <p className="mt-2 text-center text-[11px] font-medium text-white/70">Inscrições em breve</p>}
               </div>
             </article>
           );
