@@ -198,7 +198,8 @@ function Index() {
           <div className="relative z-10 mx-auto flex min-h-[32rem] w-full max-w-[1440px] items-center px-6 py-20 sm:px-8 sm:py-28 lg:px-12">
             <div className="max-w-xl text-left">
               <h1 className="hero-stagger hero-stagger-3 text-[clamp(2.25rem,5vw,3.5rem)] font-extrabold leading-[1.1]">
-                Série de Palestras sobre Empreendedorismo com Founders Reais
+                Série de Palestras sobre <span className="hero-highlight">Empreendedorismo</span> com
+                Founders Reais
               </h1>
               <p className="hero-description hero-stagger hero-stagger-4 mt-6 text-base leading-relaxed sm:text-lg">
                 Acompanhe uma série de palestras presenciais baseada em cases reais do Congresso da

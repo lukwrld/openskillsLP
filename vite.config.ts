@@ -5,7 +5,6 @@
 //     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
-import netlify from "@netlify/vite-plugin-tanstack-start";
 
 export default defineConfig({
   tanstackStart: {
@@ -13,7 +12,8 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
-  // Produces the Netlify Functions/Edge artifacts during `vite build` and
-  // emulates the Netlify runtime during local development.
-  plugins: [netlify()],
+  // Generate the Nitro output expected by Vercel. The Lovable config already
+  // installs the Nitro Vite plugin, so configuring its preset here avoids
+  // registering a duplicate plugin.
+  nitro: { preset: "vercel" },
 });
