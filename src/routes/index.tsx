@@ -198,12 +198,14 @@ function Index() {
           <div className="relative z-10 mx-auto flex min-h-[32rem] w-full max-w-[1440px] items-center px-6 py-20 sm:px-8 sm:py-28 lg:px-12">
             <div className="max-w-xl text-left">
               <h1 className="hero-stagger hero-stagger-3 text-[clamp(2.25rem,5vw,3.5rem)] font-extrabold leading-[1.1]">
-                Série de Palestras sobre <span className="hero-highlight">Empreendedorismo</span> com
-                Founders Reais
+                <span className="sm:block">Palestras sobre </span>
+                <span className="sm:block">
+                  <span className="hero-highlight">Empreendedorismo</span> na Prática
+                </span>
               </h1>
               <p className="hero-description hero-stagger hero-stagger-4 mt-6 text-base leading-relaxed sm:text-lg">
-                Acompanhe uma série de palestras presenciais baseada em cases reais do Congresso da
-                100 Open Startups, com founders e executivos que já viveram os desafios na prática.
+                Desenvolva competências empreendedoras com founders e executivos, a partir de casos
+                reais, decisões e aprendizados vividos no mercado.
               </p>
               <div className="hero-stagger hero-stagger-5 mt-9 flex justify-start">
                 <CtaButton size="lg" />
@@ -344,7 +346,7 @@ function Index() {
                               className="comp-item flex items-center gap-3 text-sm text-muted-foreground"
                               style={{ transitionDelay: `${(competencia.id % 4) * 55}ms` }}
                             >
-                              <span className="comp-num flex size-6 shrink-0 items-center justify-center rounded-full border border-border text-xs font-semibold text-foreground">
+                              <span aria-hidden="true" className="comp-num flex size-6 shrink-0 items-center justify-center rounded-full border border-border text-xs font-semibold text-foreground">
                                 {competencia.id}
                               </span>
                               {competencia.nome}
@@ -365,7 +367,7 @@ function Index() {
             Programação
           </h2>
           <div
-            className={`${LEITURA} mt-6 flex items-start gap-3 rounded-2xl border border-primary/25 bg-accent/60 p-4 text-left text-sm leading-relaxed text-foreground`}
+            className={`${LEITURA} mt-6 flex items-start gap-3 rounded-[var(--radius-surface)] border border-primary/25 bg-accent/60 p-4 text-left text-sm leading-relaxed text-foreground`}
           >
             <Info className="mt-0.5 size-4 shrink-0 text-primary" />
             <p>
@@ -387,7 +389,7 @@ function Index() {
                 className="timeline-step reveal flex gap-4"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary font-display text-sm font-bold text-primary-foreground">
+                <span aria-hidden="true" className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary font-display text-sm font-bold text-primary-foreground">
                   {i + 1}
                 </span>
                 <p className="pt-1.5 text-base leading-relaxed text-muted-foreground">

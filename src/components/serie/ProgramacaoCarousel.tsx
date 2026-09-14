@@ -37,7 +37,7 @@ export function ProgramacaoCarousel({ competencias, blocos }: ProgramacaoCarouse
   return (
     <div
       ref={carouselRef}
-      className="relative mt-10 h-[20rem] sm:h-[22rem]"
+      className="relative mt-10 h-[25rem] sm:h-[30rem]"
       aria-roledescription="carrossel"
     >
       <div className="relative flex size-full items-center justify-center [perspective:1000px]">
@@ -53,7 +53,7 @@ export function ProgramacaoCarousel({ competencias, blocos }: ProgramacaoCarouse
             <article
               key={competencia.id}
               aria-hidden={!isCurrent}
-              className="absolute h-72 w-52 overflow-hidden rounded-2xl border border-border bg-background text-left shadow-xl transition-all duration-500 ease-in-out sm:h-80 sm:w-60"
+              className="absolute h-96 w-64 overflow-hidden rounded-[var(--radius-surface)] border border-border bg-background text-left shadow-xl transition-all duration-500 ease-in-out sm:h-[28rem] sm:w-80"
               style={{
                 transform: `translateX(${position * 45}%) scale(${isCurrent ? 1 : isAdjacent ? 0.85 : 0.7})`,
                 zIndex: isCurrent ? 10 : isAdjacent ? 5 : 1,
@@ -64,20 +64,24 @@ export function ProgramacaoCarousel({ competencias, blocos }: ProgramacaoCarouse
             >
               <img
                 src="/menu-palestrantes.png"
-                width={240}
-                height={320}
+                width={320}
+                height={448}
                 loading="lazy"
                 decoding="async"
                 alt="Palestrante em confirmação"
                 className="absolute inset-0 h-full w-full object-cover object-center"
               />
-              <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/60 to-transparent p-5 pt-20">
+              <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6 pt-28">
                 <p className="text-xs font-bold uppercase tracking-[0.09em] text-white/75">
                   {bloco?.titulo}
                 </p>
                 <h3 className="mt-2 font-display text-lg font-bold leading-tight text-white">
                   {competencia.nome}
                 </h3>
+                <p className="mt-2 text-sm text-white/75">Palestrante em confirmação</p>
+                <p className="mt-1 text-xs leading-relaxed text-white/65">
+                  Data, horário e local em confirmação
+                </p>
                 {isCurrent && (
                   <button
                     type="button"
