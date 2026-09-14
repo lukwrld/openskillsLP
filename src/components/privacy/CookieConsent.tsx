@@ -53,7 +53,7 @@ export function CookieConsent() {
   };
   return (
     <section
-      className="fixed inset-x-4 bottom-4 z-[100] mx-auto w-auto max-w-xl rounded-2xl border border-border bg-card p-5 shadow-2xl sm:bottom-6"
+      className="fixed inset-x-4 bottom-4 z-[100] mx-auto w-auto max-w-xl rounded-[var(--radius-surface)] border border-border bg-card p-5 shadow-2xl sm:bottom-6"
       aria-label="Preferências de cookies"
       role="dialog"
       aria-modal="true"

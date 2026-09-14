@@ -38,7 +38,8 @@
 }
 
 :root {
-  --radius: 0.5rem;
+  --radius: 0.875rem;
+  --radius-surface: 1.25rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.19 0.018 260);
   --surface: oklch(0.975 0.004 250);
@@ -231,6 +232,7 @@ html:not(.dark) .hero-with-video .hero-description {
 }
 .btn-solid,
 .btn-hero-pill {
+  border-radius: 9999px;
   box-shadow: 0 7px 18px -14px color-mix(in oklab, var(--primary) 85%, transparent);
   transition:
     transform 0.18s ease,
@@ -259,7 +261,7 @@ html:not(.dark) .hero-with-video .hero-description {
 }
 .bezel-outer {
   border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-surface);
   height: 100%;
   padding: 0.25rem;
   transition:
@@ -267,14 +269,14 @@ html:not(.dark) .hero-with-video .hero-description {
     box-shadow 0.2s ease;
 }
 .bezel-inner {
-  border-radius: calc(var(--radius-xl) - 2px);
+  border-radius: calc(var(--radius-surface) - 0.25rem);
   background: var(--card);
   height: 100%;
   padding: 1.5rem;
 }
 .card-lift {
   border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-surface);
   background: var(--card);
   transition:
     transform 0.2s ease,
@@ -422,7 +424,7 @@ html:not(.dark) .hero-with-video .hero-description {
 }
 .timeline-step {
   position: relative;
-  border-radius: 0.75rem;
+  border-radius: var(--radius-surface);
   padding: 0.75rem;
   margin-inline: -0.75rem;
   transition:

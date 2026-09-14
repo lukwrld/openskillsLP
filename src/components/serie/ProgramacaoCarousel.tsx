@@ -53,7 +53,7 @@ export function ProgramacaoCarousel({ competencias, blocos }: ProgramacaoCarouse
             <article
               key={competencia.id}
               aria-hidden={!isCurrent}
-              className="absolute h-72 w-52 overflow-hidden rounded-2xl border border-border bg-background text-left shadow-xl transition-all duration-500 ease-in-out sm:h-80 sm:w-60"
+              className="absolute h-72 w-52 overflow-hidden rounded-[var(--radius-surface)] border border-border bg-background text-left shadow-xl transition-all duration-500 ease-in-out sm:h-80 sm:w-60"
               style={{
                 transform: `translateX(${position * 45}%) scale(${isCurrent ? 1 : isAdjacent ? 0.85 : 0.7})`,
                 zIndex: isCurrent ? 10 : isAdjacent ? 5 : 1,
