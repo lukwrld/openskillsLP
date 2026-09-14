@@ -149,11 +149,11 @@ section[id],
   background:
     linear-gradient(
       90deg,
-      color-mix(in oklab, var(--primary) 34%, var(--fx-bg)) 0%,
-      color-mix(in oklab, var(--primary) 22%, transparent) 30%,
-      color-mix(in oklab, var(--primary) 14%, transparent) 48%,
-      color-mix(in oklab, var(--primary) 8%, transparent) 64%,
-      transparent 82%
+      var(--fx-bg) 0%,
+      color-mix(in oklab, var(--fx-bg) 96%, var(--background)) 28%,
+      color-mix(in oklab, var(--navy) 14%, transparent) 48%,
+      color-mix(in oklab, var(--primary) 16%, transparent) 64%,
+      transparent 84%
     ),
     linear-gradient(
       180deg,
@@ -191,7 +191,16 @@ section[id],
 }
 html:not(.dark) .hero-with-video h1,
 html:not(.dark) .hero-with-video .hero-description {
+  text-shadow: 0 1px 12px color-mix(in oklab, var(--background) 78%, transparent);
+}
+html:not(.dark) .hero-with-video h1 {
   color: var(--navy);
+}
+html:not(.dark) .hero-with-video .hero-description {
+  color: color-mix(in oklab, var(--navy) 78%, var(--foreground));
+}
+.hero-highlight {
+  color: var(--primary);
 }
 .dark .hero-with-video h1 {
   color: var(--foreground);
@@ -413,6 +422,18 @@ html:not(.dark) .hero-with-video .hero-description {
 }
 .timeline-step {
   position: relative;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  margin-inline: -0.75rem;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+.timeline-step:hover {
+  background: color-mix(in oklab, var(--primary) 9%, transparent);
+  box-shadow: 0 10px 20px -16px color-mix(in oklab, var(--primary) 70%, transparent);
+  transform: translateX(4px);
 }
 .timeline-step + .timeline-step::before {
   content: "";
