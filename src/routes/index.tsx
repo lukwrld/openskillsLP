@@ -131,7 +131,8 @@ const comoParticipar = [
   },
   {
     titulo: "Faça sua inscrição",
-    texto: "Quando uma sessão estiver disponível, você poderá se inscrever diretamente pela página.",
+    texto:
+      "Quando uma sessão estiver disponível, você poderá se inscrever diretamente pela página.",
   },
   {
     titulo: "Participe presencialmente",
@@ -266,8 +267,14 @@ function Index() {
               {[
                 ["Caso real", "Entenda o contexto, o desafio e o que estava em jogo."],
                 ["Decisões", "Conheça as escolhas, os erros e os trade-offs enfrentados."],
-                ["Discussão", "Converse diretamente com quem viveu o caso e participe das perguntas com a turma."],
-                ["Aplicação", "Transforme o aprendizado em um exercício prático para levar com você."],
+                [
+                  "Discussão",
+                  "Converse diretamente com quem viveu o caso e participe das perguntas com a turma.",
+                ],
+                [
+                  "Aplicação",
+                  "Transforme o aprendizado em um exercício prático para levar com você.",
+                ],
               ].map(([titulo, texto], index) => (
                 <article key={titulo} className="card-lift p-5">
                   <span className="flex size-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
@@ -346,7 +353,10 @@ function Index() {
                               className="comp-item flex items-center gap-3 text-sm text-muted-foreground"
                               style={{ transitionDelay: `${(competencia.id % 4) * 55}ms` }}
                             >
-                              <span aria-hidden="true" className="comp-num flex size-6 shrink-0 items-center justify-center rounded-full border border-border text-xs font-semibold text-foreground">
+                              <span
+                                aria-hidden="true"
+                                className="comp-num flex size-6 shrink-0 items-center justify-center rounded-full border border-border text-xs font-semibold text-foreground"
+                              >
                                 {competencia.id}
                               </span>
                               {competencia.nome}
@@ -389,7 +399,10 @@ function Index() {
                 className="timeline-step reveal flex gap-4"
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <span aria-hidden="true" className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary font-display text-sm font-bold text-primary-foreground">
+                <span
+                  aria-hidden="true"
+                  className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary font-display text-sm font-bold text-primary-foreground"
+                >
                   {i + 1}
                 </span>
                 <p className="pt-1.5 text-base leading-relaxed text-muted-foreground">
@@ -399,7 +412,9 @@ function Index() {
             ))}
           </ol>
           <p className={`${LEITURA} mt-8 text-base leading-relaxed text-muted-foreground`}>
-            <strong className="font-semibold text-foreground">Ainda não há uma sessão aberta?</strong>{" "}
+            <strong className="font-semibold text-foreground">
+              Ainda não há uma sessão aberta?
+            </strong>{" "}
             Demonstre seu interesse para receber as próximas novidades da Série.
           </p>
           <p className="mt-8 flex items-center justify-center gap-2 text-sm text-muted-foreground">

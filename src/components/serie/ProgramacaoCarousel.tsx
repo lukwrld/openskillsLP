@@ -93,7 +93,11 @@ export function ProgramacaoCarousel({ competencias, blocos }: ProgramacaoCarouse
                     <ArrowRight className="size-3.5" aria-hidden="true" />
                   </button>
                 )}
-                {isCurrent && <p className="mt-2 text-center text-[11px] font-medium text-white/70">Inscrições em breve</p>}
+                {isCurrent && (
+                  <p className="mt-2 text-center text-[11px] font-medium text-white/70">
+                    Inscrições em breve
+                  </p>
+                )}
               </div>
             </article>
           );

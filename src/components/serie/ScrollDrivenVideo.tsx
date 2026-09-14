@@ -112,9 +112,9 @@ export function ScrollDrivenVideo() {
       if (started || reducedMotion) return;
       started = true;
       warmFrames(0, initialFrames);
-      await Promise.all(Array.from({ length: initialFrames }, (_, index) => loadFrame(index))).catch(
-        () => undefined,
-      );
+      await Promise.all(
+        Array.from({ length: initialFrames }, (_, index) => loadFrame(index)),
+      ).catch(() => undefined);
       playing = true;
       lastFrameAt = 0;
       animationFrame = requestAnimationFrame(play);
