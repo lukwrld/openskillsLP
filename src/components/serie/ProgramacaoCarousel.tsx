@@ -68,7 +68,7 @@ export function ProgramacaoCarousel({ competencias, blocos }: ProgramacaoCarouse
                 height={448}
                 loading="lazy"
                 decoding="async"
-                alt="Palestrante em confirmação"
+                alt="Programação em confirmação"
                 className="absolute inset-0 h-full w-full object-cover object-center"
               />
               <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6 pt-28">
@@ -78,7 +78,7 @@ export function ProgramacaoCarousel({ competencias, blocos }: ProgramacaoCarouse
                 <h3 className="mt-2 font-display text-lg font-bold leading-tight text-white">
                   {competencia.nome}
                 </h3>
-                <p className="mt-2 text-sm text-white/75">Palestrante em confirmação</p>
+                <p className="mt-2 text-sm text-white/75">Programação em confirmação</p>
                 <p className="mt-1 text-xs leading-relaxed text-white/65">
                   Data, horário e local em confirmação
                 </p>
@@ -89,7 +89,7 @@ export function ProgramacaoCarousel({ competencias, blocos }: ProgramacaoCarouse
                     title="Inscrições em breve"
                     className="btn-solid mt-4 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-lg bg-primary px-3 py-2 text-xs font-bold text-primary-foreground opacity-90"
                   >
-                    Quero me inscrever
+                    Quero participar
                     <ArrowRight className="size-3.5" aria-hidden="true" />
                   </button>
                 )}

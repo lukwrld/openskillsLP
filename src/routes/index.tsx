@@ -4,9 +4,7 @@ import {
   Award,
   CalendarClock,
   Info,
-  Lightbulb,
   LineChart,
-  MapPin,
   Mic,
   Target,
   Users,
@@ -25,7 +23,7 @@ import {
 import { blocos, competencias } from "@/data/programacao";
 
 const CTA_HREF = "#interesse";
-const CTA_LABEL = "Quero acompanhar a Série";
+const CTA_LABEL = "Quero participar";
 const LOGO_SRC = "/logo_100os_transparent.png";
 const CONTAINER = "mx-auto w-full max-w-5xl px-4 sm:px-6";
 const LEITURA = "mx-auto w-full max-w-[680px]";
@@ -34,11 +32,11 @@ const blocoIcons = [Target, Zap, Users, LineChart];
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Série de Competências Empreendedoras | 100 Open Startups" },
+      { title: "Diagnóstico de Competências Empreendedoras | 100 Open Startups" },
       {
         name: "description",
         content:
-          "Série de palestras presenciais para desenvolver competências empreendedoras com founders e executivos, a partir de casos reais do Congresso da 100 Open Startups.",
+          "Experiência presencial de desenvolvimento e Diagnóstico de Competências Empreendedoras da 100 Open Startups.",
       },
     ],
   }),
@@ -67,76 +65,76 @@ function CtaButton({
 
 const beneficios = [
   {
-    Icone: Lightbulb,
-    titulo: "Aprendizado baseado em casos reais",
-    texto: "Experiências concretas de quem precisou tomar decisões e executar na prática.",
-  },
-  {
-    Icone: Mic,
-    titulo: "Contato com founders e executivos",
-    texto: "Acesso direto a profissionais que construíram, lideraram e enfrentaram desafios reais.",
-  },
-  {
-    Icone: Users,
-    titulo: "Aplicação prática",
-    texto:
-      "Discussões e exercícios que conectam cada competência a situações que você pode enfrentar em projetos, no trabalho ou ao empreender.",
+    Icone: LineChart,
+    titulo: "Diagnóstico de Competências Empreendedoras",
+    texto: "Uma avaliação estruturada das competências utilizadas para transformar ideias em ação.",
   },
   {
     Icone: Award,
-    titulo: "Caminho para o certificado de 32 horas",
+    titulo: "Laudo de Competências",
+    texto: "Um resultado individual que ajuda você a entender seus pontos fortes e oportunidades de desenvolvimento.",
+  },
+  {
+    Icone: Mic,
+    titulo: "Workshop presencial",
     texto:
-      "Ao completar as 16 competências do curso introdutório, você recebe um certificado de conclusão de 32 horas. O certificado reconhece sua participação e conhecimento do mapa de competências empreendedoras.",
+      "Conteúdo baseado em experiências e casos reais de founders, executivos e empresas do ecossistema 100 Open Startups.",
   },
 ];
 const faq = [
   {
-    p: "O que é a Série de Competências Empreendedoras?",
-    r: "É uma série de palestras presenciais voltada ao desenvolvimento de competências empreendedoras por meio de casos reais, experiências de founders e executivos e atividades práticas.",
+    p: "O que é o Diagnóstico de Competências Empreendedoras?",
+    r: "É uma avaliação estruturada das competências empreendedoras utilizadas para transformar ideias em ação, aplicada presencialmente durante a experiência.",
   },
   {
-    p: "Como funciona cada encontro?",
-    r: "Cada sessão dura aproximadamente 2 horas e combina apresentação de um caso real, decisões e aprendizados do convidado, discussão com a turma e aplicação prática da competência abordada.",
+    p: "Como funciona a experiência?",
+    r: "Você participa de um workshop presencial baseado em casos reais, realiza o exame e recebe um Laudo com uma visão estruturada das suas competências.",
   },
   {
-    p: "Onde acontecem as palestras?",
-    r: "O piloto da Série acontece no Inovabra Habitat, em São Paulo. Novos locais e instituições parceiras poderão fazer parte das próximas edições.",
+    p: "A experiência é presencial?",
+    r: "Sim. O workshop, a aplicação do Diagnóstico e a experiência atual acontecem 100% presencialmente.",
   },
   {
-    p: "Quando começam as palestras?",
-    r: "A programação está sendo confirmada. As primeiras datas serão publicadas nesta página assim que estiverem disponíveis.",
+    p: "Quando serão as próximas experiências?",
+    r: "A programação está em confirmação. As datas disponíveis serão divulgadas nesta página.",
   },
   {
-    p: "Quem são os convidados?",
-    r: "Founders, executivos e profissionais ligados a casos reais apresentados no Congresso da 100 Open Startups. Os convidados de cada encontro serão divulgados junto à programação.",
+    p: "O que recebo ao final?",
+    r: "Você recebe seu Laudo de Competências, com uma visão dos seus pontos fortes e das oportunidades de desenvolvimento.",
   },
   {
     p: "Preciso ter uma startup para participar?",
-    r: "Não. A Série foi pensada para universitários e pessoas interessadas em desenvolver competências empreendedoras, mesmo sem experiência prévia ou um negócio próprio.",
+    r: "Não. A experiência é para pessoas interessadas em desenvolver competências empreendedoras, mesmo sem experiência prévia ou um negócio próprio.",
   },
   {
-    p: "Como faço para me inscrever?",
-    r: "Cada palestra terá sua própria inscrição assim que a programação for publicada. Enquanto isso, você pode demonstrar interesse para acompanhar as próximas sessões.",
+    p: "Como faço para participar?",
+    r: "Escolha uma das datas disponíveis quando a programação for publicada e manifeste seu interesse nesta página.",
   },
 ];
-const comoParticipar = [
+const etapasExperiencia = [
   {
-    titulo: "Acompanhe a programação",
-    texto: "As palestras serão divulgadas conforme datas, temas e convidados forem confirmados.",
+    titulo: "Escolha uma experiência",
+    texto: "Selecione uma das datas disponíveis de workshop presencial.",
   },
   {
-    titulo: "Escolha sua sessão",
+    titulo: "Participe do encontro",
     texto:
-      "Cada encontro aborda uma competência empreendedora a partir de um caso real apresentado por um founder ou executivo.",
+      "Encontre founders, executivos e especialistas em uma experiência baseada em casos reais de empreendedorismo.",
   },
   {
-    titulo: "Faça sua inscrição",
-    texto: "Quando uma sessão estiver disponível, você poderá se inscrever diretamente pela página.",
-  },
-  {
-    titulo: "Participe presencialmente",
+    titulo: "Faça o Exame",
     texto:
-      "Os encontros têm duração aproximada de 2 horas. O piloto acontece no Inovabra Habitat, em São Paulo.",
+      "Durante o encontro, realize a aplicação presencial do Diagnóstico de Competências Empreendedoras.",
+  },
+  {
+    titulo: "Receba seu Laudo",
+    texto:
+      "Tenha uma visão estruturada das suas competências e dos principais pontos para desenvolver.",
+  },
+  {
+    titulo: "Convide outras pessoas",
+    texto:
+      "Depois da experiência, você poderá indicar colegas para participarem das próximas edições.",
   },
 ];
 
@@ -198,14 +196,12 @@ function Index() {
           <div className="relative z-10 mx-auto flex min-h-[32rem] w-full max-w-[1440px] items-center px-6 py-20 sm:px-8 sm:py-28 lg:px-12">
             <div className="max-w-xl text-left">
               <h1 className="hero-stagger hero-stagger-3 text-[clamp(2.25rem,5vw,3.5rem)] font-extrabold leading-[1.1]">
-                <span className="sm:block">Palestras sobre </span>
-                <span className="sm:block">
-                  <span className="hero-highlight">Empreendedorismo</span> na Prática
-                </span>
+                Workshop de Competências Empreendedoras
               </h1>
               <p className="hero-description hero-stagger hero-stagger-4 mt-6 text-base leading-relaxed sm:text-lg">
-                Desenvolva competências empreendedoras com founders e executivos, a partir de casos
-                reais, decisões e aprendizados vividos no mercado.
+                Participe de uma experiência presencial que combina conteúdo, aplicação prática e o
+                Diagnóstico de Competências Empreendedoras. Ao final, você recebe um Laudo com uma
+                visão estruturada das suas competências.
               </p>
               <div className="hero-stagger hero-stagger-5 mt-9 flex justify-start">
                 <CtaButton size="lg" />
@@ -220,27 +216,26 @@ function Index() {
         <section className="border-y border-border bg-surface">
           <div data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
             <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
-              O que é a Série
+              Uma experiência presencial
             </h2>
             <div
               className={`${LEITURA} mt-6 space-y-5 text-base leading-relaxed text-muted-foreground`}
             >
               <p>
-                A Série de Competências Empreendedoras é um ciclo de encontros presenciais para
-                desenvolver competências essenciais para quem quer criar, decidir, comunicar,
-                liderar e executar melhor.
+                Uma experiência presencial para desenvolver e diagnosticar competências essenciais
+                para quem quer criar, decidir, comunicar, liderar e executar melhor.
               </p>
               <p>
-                Cada encontro tem duração de aproximadamente 2 horas e conecta uma competência
-                empreendedora a um caso real vivido por founders, executivos e empresas.
+                O workshop conecta competências empreendedoras a casos reais vividos por founders,
+                executivos e empresas do ecossistema 100 Open Startups.
               </p>
               <p>
-                Mais do que ouvir uma história, você entende o contexto, as decisões tomadas, os
-                erros, os aprendizados e como aplicar aquela competência na prática.
+                Além do conteúdo e da aplicação prática, você realiza presencialmente o Diagnóstico
+                de Competências Empreendedoras.
               </p>
               <p>
-                O piloto acontece no Inovabra Habitat, em São Paulo, com previsão de expansão para
-                instituições parceiras.
+                Ao final, recebe um Laudo com uma visão estruturada dos seus pontos fortes e das
+                oportunidades de desenvolvimento.
               </p>
             </div>
           </div>
@@ -260,21 +255,16 @@ function Index() {
         <section className="border-y border-border bg-surface">
           <div data-anim className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}>
             <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
-              Como funciona cada encontro
+              Como funciona
             </h2>
-            <div className={`${LEITURA} mt-6 grid gap-4 text-left sm:grid-cols-4`}>
-              {[
-                ["Caso real", "Entenda o contexto, o desafio e o que estava em jogo."],
-                ["Decisões", "Conheça as escolhas, os erros e os trade-offs enfrentados."],
-                ["Discussão", "Converse diretamente com quem viveu o caso e participe das perguntas com a turma."],
-                ["Aplicação", "Transforme o aprendizado em um exercício prático para levar com você."],
-              ].map(([titulo, texto], index) => (
-                <article key={titulo} className="card-lift p-5">
-                  <span className="flex size-8 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground">
+            <div className="mx-auto mt-6 grid w-full max-w-6xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-5">
+              {etapasExperiencia.map(({ titulo, texto }, index) => (
+                <article key={titulo} className="card-lift p-4">
+                  <span className="flex size-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                     {index + 1}
                   </span>
-                  <h3 className="mt-4 font-display font-semibold">{titulo}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{texto}</p>
+                  <h3 className="mt-3 font-display text-[0.9375rem] font-semibold leading-snug">{titulo}</h3>
+                  <p className="mt-1.5 text-sm leading-snug text-muted-foreground">{texto}</p>
                 </article>
               ))}
             </div>
@@ -282,9 +272,9 @@ function Index() {
         </section>
         <section data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
           <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
-            O que você ganha
+            O que você recebe
           </h2>
-          <div className="mx-auto mt-8 grid max-w-4xl gap-5 sm:grid-cols-2">
+          <div className="mx-auto mt-8 grid max-w-4xl gap-5 sm:grid-cols-3">
             {beneficios.map(({ Icone, titulo, texto }, indice) => (
               <article
                 key={titulo}
@@ -371,18 +361,49 @@ function Index() {
           >
             <Info className="mt-0.5 size-4 shrink-0 text-primary" />
             <p>
-              <strong className="font-semibold">Programação em confirmação.</strong> As palestras
-              serão divulgadas conforme datas, temas e convidados forem confirmados.
+              <strong className="font-semibold">Programação em confirmação.</strong> As próximas
+              experiências serão divulgadas conforme forem confirmadas.
             </p>
           </div>
           <ProgramacaoCarousel competencias={competencias} blocos={blocos} />
         </section>
+        <section id="interesse" className="relative bg-navy text-navy-foreground">
+          <div className={`${CONTAINER} relative py-20 text-center`}>
+            <h2 className="editorial-heading font-display text-2xl font-bold tracking-tight sm:text-4xl">
+              Escolha sua próxima experiência
+            </h2>
+            <p className={`${LEITURA} mt-4 text-base text-navy-foreground/70`}>
+              Selecione uma das próximas datas disponíveis para participar presencialmente do
+              workshop e realizar seu Diagnóstico de Competências Empreendedoras.
+            </p>
+            <div className="mx-auto mt-8 max-w-xl rounded-[var(--radius-surface)] border border-navy-foreground/20 bg-navy-foreground/5 p-6 text-left sm:p-8">
+              <div className="flex items-start gap-4">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-navy-foreground/10 text-navy-foreground">
+                  <CalendarClock className="size-5" aria-hidden="true" />
+                </span>
+                <div>
+                  <h3 className="font-display text-lg font-semibold">Novas datas em confirmação</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-navy-foreground/70">
+                    Em breve divulgaremos os próximos workshops presenciais.
+                  </p>
+                  <p className="mt-5 text-sm leading-relaxed text-navy-foreground/70">
+                    <strong className="font-semibold text-navy-foreground">Formato:</strong> 100%
+                    presencial
+                    <br />
+                    <strong className="font-semibold text-navy-foreground">Local:</strong> Inovabra
+                    Habitat — São Paulo
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         <section data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
           <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
-            Como participar
+            Experiência 100% presencial
           </h2>
           <ol className={`${LEITURA} mt-8 space-y-5 text-left`}>
-            {comoParticipar.map(({ titulo, texto }, i) => (
+            {etapasExperiencia.map(({ titulo, texto }, i) => (
               <li
                 key={i}
                 data-anim
@@ -399,12 +420,7 @@ function Index() {
             ))}
           </ol>
           <p className={`${LEITURA} mt-8 text-base leading-relaxed text-muted-foreground`}>
-            <strong className="font-semibold text-foreground">Ainda não há uma sessão aberta?</strong>{" "}
-            Demonstre seu interesse para receber as próximas novidades da Série.
-          </p>
-          <p className="mt-8 flex items-center justify-center gap-2 text-sm text-muted-foreground">
-            <MapPin className="size-4 text-primary" />
-            Piloto no Inovabra Habitat, em São Paulo.
+            Do workshop à entrega do Laudo, toda a experiência acontece presencialmente.
           </p>
         </section>
         <section className="border-y border-border bg-surface">
@@ -422,20 +438,6 @@ function Index() {
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.r}</p>
                 </details>
               ))}
-            </div>
-          </div>
-        </section>
-        <section id="interesse" className="relative bg-navy text-navy-foreground">
-          <div className={`${CONTAINER} relative py-20 text-center`}>
-            <h2 className="editorial-heading font-display text-2xl font-bold tracking-tight sm:text-4xl">
-              Acompanhe a Série de perto
-            </h2>
-            <p className={`${LEITURA} mt-4 text-base text-navy-foreground/70`}>
-              Receba as próximas datas, convidados e informações sobre as palestras da Série de
-              Competências Empreendedoras.
-            </p>
-            <div className="mt-8 flex justify-center">
-              <CtaButton size="lg" />
             </div>
           </div>
         </section>

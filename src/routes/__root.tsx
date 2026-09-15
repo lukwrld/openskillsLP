@@ -79,21 +79,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Série de Competências Empreendedoras | 100 Open Startups" },
+      { title: "Diagnóstico de Competências Empreendedoras | 100 Open Startups" },
       {
         name: "description",
         content:
-          "Ciclo de palestras presenciais com founders e executivos sobre as 16 competências empreendedoras.",
+          "Experiência presencial de desenvolvimento e Diagnóstico de Competências Empreendedoras.",
       },
       { name: "author", content: "100 Open Startups" },
       {
         property: "og:title",
-        content: "Série de Competências Empreendedoras | 100 Open Startups",
+        content: "Diagnóstico de Competências Empreendedoras | 100 Open Startups",
       },
       {
         property: "og:description",
         content:
-          "Palestras presenciais com quem viveu o caso na prática. Programação em confirmação.",
+          "Workshop presencial, Diagnóstico de Competências Empreendedoras e Laudo individual. Programação em confirmação.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
