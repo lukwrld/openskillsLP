@@ -9,19 +9,28 @@ export function useRevealOnScroll() {
     const alvos = Array.from(document.querySelectorAll<HTMLElement>("[data-anim]"));
     if (!alvos.length) return;
 
-    const obs = new IntersectionObserver(
-      (entradas) => {
-        for (const e of entradas) {
-          if (e.isIntersecting) {
-            e.target.classList.toggle("is-visible", e.isIntersecting);
-          }
-        }
-      },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.01 },
-    );
+    const reveal = (entradas: IntersectionObserverEntry[]) => {
+      for (const entrada of entradas) {
+        if (entrada.isIntersecting) entrada.target.classList.add("is-visible");
+      }
+    };
+    const regulares = alvos.filter((el) => el.dataset.anim !== "lower");
+    const inferiores = alvos.filter((el) => el.dataset.anim === "lower");
+    const obs = new IntersectionObserver(reveal, {
+      rootMargin: "0px 0px -10% 0px",
+      threshold: 0.01,
+    });
+    const obsInferior = new IntersectionObserver(reveal, {
+      rootMargin: "0px 0px -28% 0px",
+      threshold: 0.01,
+    });
 
-    for (const el of alvos) obs.observe(el);
-    return () => obs.disconnect();
+    for (const el of regulares) obs.observe(el);
+    for (const el of inferiores) obsInferior.observe(el);
+    return () => {
+      obs.disconnect();
+      obsInferior.disconnect();
+    };
   }, []);
 }
 
@@ -53,6 +62,50 @@ export function useHeaderScrollState() {
 }
 
 /** Revela as competências em dois grupos enquanto a seção permanece em foco. */
+/**
+ * Vincula o progresso visual da jornada à posição real da rolagem.
+ */
+export function useShowcaseScrollMotion() {
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const journey = document.querySelector<HTMLElement>(".journey-showcase");
+    const experience = document.querySelector<HTMLElement>(".experience-showcase");
+    if (!journey && !experience) return;
+    let frame = 0;
+
+    const clamp = (value: number) => Math.min(1, Math.max(0, value));
+    const update = () => {
+      frame = 0;
+      const viewportHeight = window.innerHeight;
+      if (experience) {
+        const rect = experience.getBoundingClientRect();
+        const threshold = viewportHeight * 0.72;
+        const entered = rect.top < threshold;
+        if (entered) experience.classList.add("is-visible");
+      }
+
+      if (journey) {
+        const rect = journey.getBoundingClientRect();
+        const progress = clamp((viewportHeight * 0.78 - rect.top) / (rect.height * 0.72));
+        journey.style.setProperty("--journey-progress", progress.toFixed(3));
+      }
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
+  }, []);
+}
+
 export function useCompetenciasStage() {
   useEffect(() => {
     const section = document.querySelector<HTMLElement>(".competencias-stage");

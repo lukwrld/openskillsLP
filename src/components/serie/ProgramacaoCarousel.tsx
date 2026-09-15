@@ -89,7 +89,7 @@ export function ProgramacaoCarousel({ competencias, blocos }: ProgramacaoCarouse
                     title="Inscrições em breve"
                     className="btn-solid mt-4 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-lg bg-primary px-3 py-2 text-xs font-bold text-primary-foreground opacity-90"
                   >
-                    Quero participar
+                    Escolher minhas palestras
                     <ArrowRight className="size-3.5" aria-hidden="true" />
                   </button>
                 )}

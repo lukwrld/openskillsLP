@@ -19,15 +19,21 @@ import {
   useCompetenciasStage,
   useHeaderScrollState,
   useRevealOnScroll,
+  useShowcaseScrollMotion,
 } from "@/hooks/use-serie-anim";
 import { blocos, competencias } from "@/data/programacao";
 
 const CTA_HREF = "#interesse";
-const CTA_LABEL = "Quero participar";
+const CTA_LABEL = "Escolher minhas palestras";
 const LOGO_SRC = "/logo_100os_transparent.png";
 const CONTAINER = "mx-auto w-full max-w-5xl px-4 sm:px-6";
 const LEITURA = "mx-auto w-full max-w-[680px]";
 const blocoIcons = [Target, Zap, Users, LineChart];
+const pilaresExperiencia = [
+  { Icone: Mic, titulo: "Casos reais" },
+  { Icone: Target, titulo: "Palestras práticas" },
+  { Icone: LineChart, titulo: "Competências em ação" },
+];
 
 type ExperienciaAgendada = {
   nome: string;
@@ -95,53 +101,49 @@ const beneficios = [
 ];
 const faq = [
   {
-    p: "O que é o Diagnóstico de Competências Empreendedoras?",
-    r: "É uma avaliação estruturada das competências empreendedoras utilizadas para transformar ideias em ação, aplicada presencialmente durante a experiência.",
-  },
-  {
-    p: "Como funciona a experiência?",
-    r: "Você participa de um workshop presencial baseado em casos reais, realiza o exame e recebe um Laudo com uma visão estruturada das suas competências.",
-  },
-  {
-    p: "A experiência é presencial?",
-    r: "Sim. O workshop, a aplicação do Diagnóstico e a experiência atual acontecem 100% presencialmente.",
-  },
-  {
-    p: "Quando serão as próximas experiências?",
-    r: "A programação está em confirmação. As datas disponíveis serão divulgadas nesta página.",
-  },
-  {
-    p: "O que recebo ao final?",
-    r: "Você recebe seu Laudo de Competências, com uma visão dos seus pontos fortes e das oportunidades de desenvolvimento.",
-  },
-  {
     p: "Preciso ter uma startup para participar?",
-    r: "Não. A experiência é para pessoas interessadas em desenvolver competências empreendedoras, mesmo sem experiência prévia ou um negócio próprio.",
+    r: "Não. A experiência é voltada para universitários, profissionais e pessoas interessadas em desenvolver competências empreendedoras, mesmo sem negócio próprio.",
   },
   {
-    p: "Como faço para participar?",
-    r: "Escolha uma das datas disponíveis quando a programação for publicada e manifeste seu interesse nesta página.",
+    p: "Posso participar de mais de uma palestra?",
+    r: "Sim. Conforme novas experiências forem abertas, você poderá escolher as palestras e workshops que mais fizerem sentido para você.",
+  },
+  {
+    p: "Quando serão divulgadas as próximas datas?",
+    r: "A programação será atualizada conforme novas palestras, datas e convidados forem confirmados.",
+  },
+  {
+    p: "Como faço minha inscrição?",
+    r: "Escolha uma das experiências disponíveis na programação e siga o fluxo de inscrição indicado na página.",
+  },
+  {
+    p: "Onde acontecem as experiências?",
+    r: "As primeiras edições acontecem no Inovabra Habitat, em São Paulo. Informações específicas de cada encontro serão exibidas na programação.",
+  },
+  {
+    p: "Como funciona a indicação de outras pessoas?",
+    r: "Após participar, você poderá receber uma forma de convite ou indicação para compartilhar com colegas nas próximas edições.",
   },
 ];
 const etapasExperiencia = [
   {
     titulo: "Escolha uma experiência",
-    texto: "Selecione uma das datas disponíveis de workshop presencial.",
+    texto: "Selecione uma das próximas palestras ou workshops disponíveis.",
   },
   {
     titulo: "Participe do encontro",
     texto:
-      "Encontre founders, executivos e especialistas em uma experiência baseada em casos reais de empreendedorismo.",
+      "Aprenda com founders, executivos e especialistas a partir de experiências e casos reais.",
   },
   {
     titulo: "Faça o Exame",
     texto:
-      "Durante o encontro, realize a aplicação presencial do Diagnóstico de Competências Empreendedoras.",
+      "Realize o Diagnóstico de Competências Empreendedoras durante a experiência.",
   },
   {
     titulo: "Receba seu Laudo",
     texto:
-      "Tenha uma visão estruturada das suas competências e dos principais pontos para desenvolver.",
+      "Entenda seus principais pontos fortes e oportunidades de desenvolvimento.",
   },
   {
     titulo: "Convide outras pessoas",
@@ -169,6 +171,7 @@ function CompetenciasMarquee() {
 function Index() {
   useRevealOnScroll();
   useHeaderScrollState();
+  useShowcaseScrollMotion();
   useCompetenciasStage();
   return (
     <div className="relative min-h-screen bg-background text-foreground">
@@ -208,7 +211,7 @@ function Index() {
           <div className="relative z-10 mx-auto flex min-h-[32rem] w-full max-w-[1440px] items-center px-6 py-20 sm:px-8 sm:py-28 lg:px-12">
             <div className="max-w-xl text-left">
               <h1 className="hero-stagger hero-stagger-3 text-[clamp(2.25rem,5vw,3.5rem)] font-extrabold leading-[1.1]">
-                Workshop de Competências Empreendedoras
+                Workshop de <span className="hero-highlight">Competências</span> Empreendedoras
               </h1>
               <p className="hero-description hero-stagger hero-stagger-4 mt-6 text-base leading-relaxed sm:text-lg">
                 Participe de uma experiência presencial que combina conteúdo, aplicação prática e o
@@ -225,36 +228,39 @@ function Index() {
             </div>
           </div>
         </section>
-        <section className="border-y border-border bg-surface">
-          <div data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
+        <section className="experience-section border-y border-border bg-surface">
+          <div data-anim="lower" className={`experience-showcase reveal ${CONTAINER} py-20 text-center sm:py-24`}>
             <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
-              Uma experiência presencial
+              Uma experiência presencial?
             </h2>
-            <div
-              className={`${LEITURA} mt-6 space-y-5 text-base leading-relaxed text-muted-foreground`}
-            >
-              <p>
-                Uma experiência presencial para desenvolver e diagnosticar competências essenciais
-                para quem quer criar, decidir, comunicar, liderar e executar melhor.
-              </p>
-              <p>
-                O workshop conecta competências empreendedoras a casos reais vividos por founders,
-                executivos e empresas do ecossistema 100 Open Startups.
-              </p>
-              <p>
-                Além do conteúdo e da aplicação prática, você realiza presencialmente o Diagnóstico
-                de Competências Empreendedoras.
-              </p>
-              <p>
-                Ao final, recebe um Laudo com uma visão estruturada dos seus pontos fortes e das
-                oportunidades de desenvolvimento.
-              </p>
+            <p className={`${LEITURA} experience-showcase__copy mt-8 text-base leading-relaxed text-muted-foreground`}>
+              Aprenda em palestras construídas a partir de cases reais de founders, executivos e
+              empresas que passaram pelos{" "}
+              <a
+                href="https://www.openstartups.net/events/congresso-cases/index.html"
+                target="_blank"
+                rel="noreferrer"
+                className="link-underline font-semibold text-primary"
+              >
+                5 Congressos 100 Open Startups
+              </a>
+              .
+            </p>
+            <div className="experience-showcase__cards mt-10">
+              {pilaresExperiencia.map(({ Icone, titulo }) => (
+                <article key={titulo} className="experience-showcase__card">
+                  <span className="experience-showcase__icon" aria-hidden="true">
+                    <Icone className="size-6" />
+                  </span>
+                  <h3>{titulo}</h3>
+                </article>
+              ))}
             </div>
           </div>
         </section>
         <section data-anim className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}>
           <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
-            Para quem é
+            Para quem é?
           </h2>
           <p className={`${LEITURA} mt-6 text-base leading-relaxed text-muted-foreground`}>
             Para universitários de qualquer curso que querem desenvolver competências úteis para
@@ -264,27 +270,27 @@ function Index() {
             práticas além da sala de aula.
           </p>
         </section>
-        <section className="border-y border-border bg-surface">
-          <div data-anim className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}>
+        <section className="journey-section border-y border-border bg-surface">
+          <div data-anim className={`journey-showcase reveal ${CONTAINER} py-16 text-center sm:py-20`}>
             <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
-              Como funciona
+              Como funciona?
             </h2>
-            <div className="mx-auto mt-6 grid w-full max-w-6xl gap-3 text-left sm:grid-cols-2 lg:grid-cols-5">
+            <ol className="journey-flow mx-auto mt-8 w-full max-w-6xl text-left">
               {etapasExperiencia.map(({ titulo, texto }, index) => (
-                <article key={titulo} className="card-lift p-4">
-                  <span className="flex size-7 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                    {index + 1}
+                <li key={titulo} className="journey-flow__step">
+                  <span className="journey-flow__marker">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-3 font-display text-[0.9375rem] font-semibold leading-snug">{titulo}</h3>
-                  <p className="mt-1.5 text-sm leading-snug text-muted-foreground">{texto}</p>
-                </article>
+                  <h3 className="mt-4 font-display text-[0.9375rem] font-semibold leading-snug">{titulo}</h3>
+                  <p className="mt-2 text-sm leading-snug text-muted-foreground">{texto}</p>
+                </li>
               ))}
-            </div>
+            </ol>
           </div>
         </section>
         <section data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
           <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
-            O que você recebe
+            O que você recebe?
           </h2>
           <div className="mx-auto mt-8 grid max-w-4xl gap-5 sm:grid-cols-3">
             {beneficios.map(({ Icone, titulo, texto }, indice) => (
@@ -305,7 +311,7 @@ function Index() {
         <section className="border-y border-border bg-surface">
           <div className={`${CONTAINER} py-16 sm:py-20`}>
             <h2 className="font-display text-3xl font-extrabold tracking-tight sm:text-4xl">
-              As 16 competências
+              Quais são as 16 competências?
             </h2>
             <div className="competencias-stage">
               <span
@@ -366,7 +372,7 @@ function Index() {
         </section>
         <section id="programacao" className={`${CONTAINER} py-20 text-center sm:py-24`}>
           <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
-            Programação
+            Qual é a programação?
           </h2>
           <div
             className={`${LEITURA} mt-6 flex items-start gap-3 rounded-[var(--radius-surface)] border border-primary/25 bg-accent/60 p-4 text-left text-sm leading-relaxed text-foreground`}
@@ -382,11 +388,11 @@ function Index() {
         <section id="interesse" className="relative bg-navy text-navy-foreground">
           <div className={`${CONTAINER} relative py-20 text-center`}>
             <h2 className="editorial-heading font-display text-2xl font-bold tracking-tight sm:text-4xl">
-              Escolha sua próxima experiência
+              Qual é a sua próxima experiência?
             </h2>
             <p className={`${LEITURA} mt-4 text-base text-navy-foreground/70`}>
-              Selecione uma das próximas datas disponíveis para participar presencialmente do
-              workshop e realizar seu Diagnóstico de Competências Empreendedoras.
+              Confira as próximas palestras e workshops e escolha a experiência que mais combina
+              com você.
             </p>
             {proximasExperiencias.length ? (
               <div className="mx-auto mt-8 grid max-w-4xl gap-5 text-left sm:grid-cols-2">
@@ -426,7 +432,7 @@ function Index() {
                       title="Inscrições em breve"
                       className="btn-solid mt-6 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground opacity-90"
                     >
-                      Quero participar
+                      Escolher minhas palestras
                       <ArrowRight className="size-4" aria-hidden="true" />
                     </button>
                   </article>
@@ -456,35 +462,10 @@ function Index() {
             )}
           </div>
         </section>
-        <section data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
-          <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
-            Experiência 100% presencial
-          </h2>
-          <ol className={`${LEITURA} mt-8 space-y-5 text-left`}>
-            {etapasExperiencia.map(({ titulo, texto }, i) => (
-              <li
-                key={i}
-                data-anim
-                className="timeline-step reveal flex gap-4"
-                style={{ transitionDelay: `${i * 80}ms` }}
-              >
-                <span aria-hidden="true" className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary font-display text-sm font-bold text-primary-foreground">
-                  {i + 1}
-                </span>
-                <p className="pt-1.5 text-base leading-relaxed text-muted-foreground">
-                  <strong className="font-semibold text-foreground">{titulo}</strong> — {texto}
-                </p>
-              </li>
-            ))}
-          </ol>
-          <p className={`${LEITURA} mt-8 text-base leading-relaxed text-muted-foreground`}>
-            Do workshop à entrega do Laudo, toda a experiência acontece presencialmente.
-          </p>
-        </section>
         <section className="border-y border-border bg-surface">
           <div data-anim className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}>
             <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
-              Perguntas frequentes
+              Perguntas frequentes?
             </h2>
             <div className={`${LEITURA} mt-8 space-y-3 text-left`}>
               {faq.map((item) => (
