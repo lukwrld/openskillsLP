@@ -29,6 +29,18 @@ const CONTAINER = "mx-auto w-full max-w-5xl px-4 sm:px-6";
 const LEITURA = "mx-auto w-full max-w-[680px]";
 const blocoIcons = [Target, Zap, Users, LineChart];
 
+type ExperienciaAgendada = {
+  nome: string;
+  data: string;
+  horario: string;
+  local: string;
+  palestrante?: string;
+  disponibilidade: string;
+};
+
+// As experiências confirmadas serão cadastradas aqui quando as informações estiverem disponíveis.
+const proximasExperiencias: ExperienciaAgendada[] = [];
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -376,26 +388,72 @@ function Index() {
               Selecione uma das próximas datas disponíveis para participar presencialmente do
               workshop e realizar seu Diagnóstico de Competências Empreendedoras.
             </p>
-            <div className="mx-auto mt-8 max-w-xl rounded-[var(--radius-surface)] border border-navy-foreground/20 bg-navy-foreground/5 p-6 text-left sm:p-8">
-              <div className="flex items-start gap-4">
-                <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-navy-foreground/10 text-navy-foreground">
-                  <CalendarClock className="size-5" aria-hidden="true" />
-                </span>
-                <div>
-                  <h3 className="font-display text-lg font-semibold">Novas datas em confirmação</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-navy-foreground/70">
-                    Em breve divulgaremos os próximos workshops presenciais.
-                  </p>
-                  <p className="mt-5 text-sm leading-relaxed text-navy-foreground/70">
-                    <strong className="font-semibold text-navy-foreground">Formato:</strong> 100%
-                    presencial
-                    <br />
-                    <strong className="font-semibold text-navy-foreground">Local:</strong> Inovabra
-                    Habitat — São Paulo
-                  </p>
+            {proximasExperiencias.length ? (
+              <div className="mx-auto mt-8 grid max-w-4xl gap-5 text-left sm:grid-cols-2">
+                {proximasExperiencias.map((experiencia) => (
+                  <article
+                    key={`${experiencia.nome}-${experiencia.data}`}
+                    className="rounded-[var(--radius-surface)] border border-navy-foreground/20 bg-navy-foreground/5 p-6"
+                  >
+                    <h3 className="font-display text-lg font-semibold">{experiencia.nome}</h3>
+                    <dl className="mt-4 space-y-2 text-sm leading-relaxed text-navy-foreground/70">
+                      <div>
+                        <dt className="inline font-semibold text-navy-foreground">Data: </dt>
+                        <dd className="inline">{experiencia.data}</dd>
+                      </div>
+                      <div>
+                        <dt className="inline font-semibold text-navy-foreground">Horário: </dt>
+                        <dd className="inline">{experiencia.horario}</dd>
+                      </div>
+                      <div>
+                        <dt className="inline font-semibold text-navy-foreground">Local: </dt>
+                        <dd className="inline">{experiencia.local}</dd>
+                      </div>
+                      {experiencia.palestrante && (
+                        <div>
+                          <dt className="inline font-semibold text-navy-foreground">Palestrante: </dt>
+                          <dd className="inline">{experiencia.palestrante}</dd>
+                        </div>
+                      )}
+                      <div>
+                        <dt className="inline font-semibold text-navy-foreground">Disponibilidade: </dt>
+                        <dd className="inline">{experiencia.disponibilidade}</dd>
+                      </div>
+                    </dl>
+                    <button
+                      type="button"
+                      disabled
+                      title="Inscrições em breve"
+                      className="btn-solid mt-6 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground opacity-90"
+                    >
+                      Quero participar
+                      <ArrowRight className="size-4" aria-hidden="true" />
+                    </button>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <div className="mx-auto mt-8 max-w-xl rounded-[var(--radius-surface)] border border-navy-foreground/20 bg-navy-foreground/5 p-6 text-left sm:p-8">
+                <div className="flex items-start gap-4">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-navy-foreground/10 text-navy-foreground">
+                    <CalendarClock className="size-5" aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h3 className="font-display text-lg font-semibold">Novas datas em confirmação</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-navy-foreground/70">
+                      Em breve divulgaremos os próximos workshops presenciais.
+                    </p>
+                    <p className="mt-5 text-sm leading-relaxed text-navy-foreground/70">
+                      <strong className="font-semibold text-navy-foreground">Formato:</strong> 100%
+                      presencial
+                      <br />
+                      <strong className="font-semibold text-navy-foreground">Local:</strong> Inovabra
+                      Habitat — São Paulo
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </section>
         <section data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
