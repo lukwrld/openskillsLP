@@ -90,6 +90,7 @@ html {
 }
 body {
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 section[id],
 [id]:target {
@@ -424,6 +425,7 @@ html:not(.dark) .hero-with-video .hero-description {
 }
 .audience-section {
   isolation: isolate;
+  width: 100%;
   background:
     radial-gradient(circle at 18% 36%, color-mix(in oklab, var(--primary) 10%, transparent), transparent 24rem),
     linear-gradient(115deg, var(--background), color-mix(in oklab, var(--accent) 42%, var(--background)) 52%, var(--background));
@@ -467,6 +469,7 @@ html:not(.dark) .hero-with-video .hero-description {
 }
 .benefits-section {
   isolation: isolate;
+  width: 100%;
   background:
     linear-gradient(120deg, color-mix(in oklab, var(--accent) 55%, var(--surface)), var(--surface) 46%, color-mix(in oklab, var(--primary) 5%, var(--surface))),
     var(--surface);

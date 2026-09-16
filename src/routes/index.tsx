@@ -24,14 +24,14 @@ import {
 import { blocos, competencias } from "@/data/programacao";
 
 const CTA_HREF = "#interesse";
-const CTA_LABEL = "Escolher minhas palestras";
+const CTA_LABEL = "Escolher meu workshop";
 const LOGO_SRC = "/logo_100os_transparent.png";
 const CONTAINER = "mx-auto w-full max-w-5xl px-4 sm:px-6";
 const LEITURA = "mx-auto w-full max-w-[680px]";
 const blocoIcons = [Target, Zap, Users, LineChart];
 const pilaresExperiencia = [
   { Icone: Mic, titulo: "Casos reais" },
-  { Icone: Target, titulo: "Palestras práticas" },
+  { Icone: Target, titulo: "Workshops práticos" },
   { Icone: LineChart, titulo: "Competências em ação" },
 ];
 
@@ -105,12 +105,12 @@ const faq = [
     r: "Não. A experiência é voltada para universitários, profissionais e pessoas interessadas em desenvolver competências empreendedoras, mesmo sem negócio próprio.",
   },
   {
-    p: "Posso participar de mais de uma palestra?",
-    r: "Sim. Conforme novas experiências forem abertas, você poderá escolher as palestras e workshops que mais fizerem sentido para você.",
+    p: "Posso participar de mais de um workshop?",
+    r: "Sim. Conforme novos workshops forem abertos, você poderá escolher os encontros que mais fizerem sentido para você.",
   },
   {
     p: "Quando serão divulgadas as próximas datas?",
-    r: "A programação será atualizada conforme novas palestras, datas e convidados forem confirmados.",
+    r: "A programação será atualizada conforme novos workshops, datas e convidados forem confirmados.",
   },
   {
     p: "Como faço minha inscrição?",
@@ -128,7 +128,7 @@ const faq = [
 const etapasExperiencia = [
   {
     titulo: "Escolha uma experiência",
-    texto: "Selecione uma das próximas palestras ou workshops disponíveis.",
+    texto: "Selecione um dos próximos workshops disponíveis.",
   },
   {
     titulo: "Participe do encontro",
@@ -136,7 +136,7 @@ const etapasExperiencia = [
       "Aprenda com founders, executivos e especialistas a partir de experiências e casos reais.",
   },
   {
-    titulo: "Faça o Exame",
+    titulo: "Realize o Diagnóstico",
     texto:
       "Realize o Diagnóstico de Competências Empreendedoras durante a experiência.",
   },
@@ -182,20 +182,20 @@ function Index() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-[560px] bg-gradient-to-b from-accent via-accent/40 to-transparent"
       />
-      <header className="site-header sticky top-0 z-40 h-16 border-b border-border md:h-20">
+      <header className="site-header sticky top-0 z-40 h-16 border-b border-border md:h-20 lg:h-24">
         <div className="mx-auto flex h-full w-full max-w-[1440px] items-center justify-between gap-3 px-5 sm:px-8 lg:px-12">
           <span className="hdr-spacer hdr-spacer--edge hidden sm:block" aria-hidden="true" />
           <img
             src={LOGO_SRC}
             alt="100 Open Startups"
-            className="size-8 shrink-0 md:size-10"
+            className="size-8 shrink-0 md:size-10 lg:size-12"
             width={40}
             height={40}
           />
           <span className="hdr-spacer hdr-spacer--mid" aria-hidden="true" />
           <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
-            <CtaButton size="sm" className="md:px-5 md:py-2.5" />
+            <CtaButton size="sm" className="md:px-5 md:py-2.5 lg:px-6 lg:py-3 lg:text-base" />
           </div>
           <span className="hdr-spacer hdr-spacer--edge hidden sm:block" aria-hidden="true" />
         </div>
@@ -231,10 +231,10 @@ function Index() {
         <section className="experience-section border-y border-border bg-surface">
           <div data-anim="lower" className={`experience-showcase reveal ${CONTAINER} py-20 text-center sm:py-24`}>
             <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
-              Uma experiência presencial?
+              O que você vai vivenciar?
             </h2>
             <p className={`${LEITURA} experience-showcase__copy mt-8 text-base leading-relaxed text-muted-foreground`}>
-              Aprenda em palestras construídas a partir de cases reais de founders, executivos e
+              Aprenda em workshops construídos a partir de cases reais de founders, executivos e
               empresas que passaram pelos{" "}
               <a
                 href="https://www.openstartups.net/events/congresso-cases/index.html"
@@ -264,11 +264,8 @@ function Index() {
             Para quem é?
           </h2>
           <p className={`${LEITURA} mt-6 text-base leading-relaxed text-muted-foreground`}>
-            Para universitários de qualquer curso, entre 18 e 25 anos, que querem desenvolver competências úteis para
-            empreender, trabalhar em projetos, liderar equipes e tomar melhores decisões. Você não
-            precisa ter uma startup ou experiência prévia com empreendedorismo. A experiência é para quem
-            está começando a graduação, entrando no mercado de trabalho ou buscando experiências
-            práticas além da sala de aula.
+            Para universitários de qualquer curso, entre 18 e 25 anos, que querem desenvolver
+            competências para empreender, trabalhar em projetos, liderar equipes e tomar melhores decisões.
           </p>
           </div>
         </section>
@@ -302,8 +299,8 @@ function Index() {
                 className="benefit-card card-lift p-6 text-center"
                 style={{ transitionDelay: `${indice * 60}ms` }}
               >
-                <span className="entrega-icon mx-auto flex size-12 items-center justify-center rounded-2xl bg-accent text-primary">
-                  <Icone className="size-6" />
+                <span className="entrega-icon mx-auto flex size-14 items-center justify-center rounded-2xl bg-accent text-primary md:size-16">
+                  <Icone className="size-7 md:size-8" />
                 </span>
                 <h3 className="mt-4 font-display text-lg font-semibold">{titulo}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{texto}</p>
@@ -395,7 +392,7 @@ function Index() {
               Qual é a sua próxima experiência?
             </h2>
             <p className={`${LEITURA} mt-4 text-base text-navy-foreground/70`}>
-              Confira as próximas palestras e workshops e escolha a experiência que mais combina
+              Confira os próximos workshops e escolha o encontro que mais combina
               com você.
             </p>
             {proximasExperiencias.length ? (
@@ -436,7 +433,7 @@ function Index() {
                       title="Inscrições em breve"
                       className="btn-solid mt-6 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground opacity-90"
                     >
-                      Escolher minhas palestras
+                      Escolher meu workshop
                       <ArrowRight className="size-4" aria-hidden="true" />
                     </button>
                   </article>
