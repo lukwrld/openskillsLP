@@ -50,13 +50,13 @@ export function ThemeToggle() {
           onClick={() => setTema(valor)}
           aria-label={label}
           aria-pressed={montado && tema === valor}
-          className={`flex size-7 items-center justify-center rounded-full transition-colors ${
+          className={`flex size-7 items-center justify-center rounded-full transition-colors md:size-8 ${
             montado && tema === valor
               ? "bg-primary text-primary-foreground"
               : "text-muted-foreground hover:text-foreground"
           }`}
         >
-          <Icone className="size-3.5" aria-hidden="true" />
+          <Icone className="size-3.5 md:size-4" aria-hidden="true" />
         </button>
       ))}
     </div>

@@ -122,6 +122,11 @@ function RootShell({ children }: { children: ReactNode }) {
             __html: `(function(){try{var t=localStorage.getItem('laudo-theme');var d=t==='dark'||((!t||t==='system')&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.classList.toggle('dark',d)}catch(e){}})();`,
           }}
         />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if('scrollRestoration' in history)history.scrollRestoration='manual';function t(){if(!location.hash)window.scrollTo(0,0)}t();window.addEventListener('pageshow',t)}catch(e){}})();`,
+          }}
+        />
         <HeadContent />
       </head>
       <body>

@@ -182,20 +182,20 @@ function Index() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-[560px] bg-gradient-to-b from-accent via-accent/40 to-transparent"
       />
-      <header className="site-header sticky top-0 z-40 h-16 border-b border-border">
-        <div className="flex h-full w-full items-center justify-between gap-3 px-5 sm:px-8 lg:px-12">
+      <header className="site-header sticky top-0 z-40 h-16 border-b border-border md:h-20">
+        <div className="mx-auto flex h-full w-full max-w-[1440px] items-center justify-between gap-3 px-5 sm:px-8 lg:px-12">
           <span className="hdr-spacer hdr-spacer--edge hidden sm:block" aria-hidden="true" />
           <img
             src={LOGO_SRC}
             alt="100 Open Startups"
-            className="size-8 shrink-0"
-            width={32}
-            height={32}
+            className="size-8 shrink-0 md:size-10"
+            width={40}
+            height={40}
           />
           <span className="hdr-spacer hdr-spacer--mid" aria-hidden="true" />
           <div className="flex items-center gap-2 sm:gap-3">
             <ThemeToggle />
-            <CtaButton size="sm" />
+            <CtaButton size="sm" className="md:px-5 md:py-2.5" />
           </div>
           <span className="hdr-spacer hdr-spacer--edge hidden sm:block" aria-hidden="true" />
         </div>
@@ -258,7 +258,8 @@ function Index() {
             </div>
           </div>
         </section>
-        <section data-anim className={`reveal ${CONTAINER} py-16 text-center sm:py-20`}>
+        <section className="audience-section relative overflow-hidden border-y border-border">
+          <div data-anim className={`reveal relative z-10 ${CONTAINER} py-16 text-center sm:py-20`}>
           <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
             Para quem é?
           </h2>
@@ -269,6 +270,7 @@ function Index() {
             está começando a graduação, entrando no mercado de trabalho ou buscando experiências
             práticas além da sala de aula.
           </p>
+          </div>
         </section>
         <section className="journey-section border-y border-border bg-surface">
           <div data-anim className={`journey-showcase reveal ${CONTAINER} py-16 text-center sm:py-20`}>
@@ -288,24 +290,26 @@ function Index() {
             </ol>
           </div>
         </section>
-        <section data-anim className={`reveal ${CONTAINER} py-20 text-center sm:py-24`}>
+        <section className="benefits-section relative overflow-hidden border-y border-border">
+          <div data-anim className={`reveal relative z-10 ${CONTAINER} py-20 text-center sm:py-24`}>
           <h2 className="h2-line font-display text-2xl font-bold tracking-tight sm:text-3xl">
             O que você recebe?
           </h2>
-          <div className="mx-auto mt-8 grid max-w-4xl gap-5 sm:grid-cols-3">
+          <div className="benefits-grid mx-auto mt-10 grid max-w-4xl gap-5 sm:grid-cols-3">
             {beneficios.map(({ Icone, titulo, texto }, indice) => (
               <article
                 key={titulo}
-                className="card-lift p-6 text-center"
+                className="benefit-card card-lift p-6 text-center"
                 style={{ transitionDelay: `${indice * 60}ms` }}
               >
-                <span className="entrega-icon mx-auto flex size-10 items-center justify-center rounded-xl bg-accent text-primary">
-                  <Icone className="size-5" />
+                <span className="entrega-icon mx-auto flex size-12 items-center justify-center rounded-2xl bg-accent text-primary">
+                  <Icone className="size-6" />
                 </span>
                 <h3 className="mt-4 font-display text-lg font-semibold">{titulo}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{texto}</p>
               </article>
             ))}
+           </div>
           </div>
         </section>
         <section className="border-y border-border bg-surface">

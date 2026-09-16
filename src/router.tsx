@@ -8,7 +8,9 @@ export const getRouter = () => {
   const router = createRouter({
     routeTree,
     context: { queryClient },
-    scrollRestoration: true,
+    // Always let a fresh page load start at the top instead of restoring the
+    // scroll position from a previous visit to the published URL.
+    scrollRestoration: false,
     defaultPreloadStaleTime: 0,
   });
 

@@ -11,7 +11,7 @@ export function useRevealOnScroll() {
 
     const reveal = (entradas: IntersectionObserverEntry[]) => {
       for (const entrada of entradas) {
-        if (entrada.isIntersecting) entrada.target.classList.add("is-visible");
+        entrada.target.classList.toggle("is-visible", entrada.isIntersecting);
       }
     };
     const regulares = alvos.filter((el) => el.dataset.anim !== "lower");
@@ -81,13 +81,17 @@ export function useShowcaseScrollMotion() {
       if (experience) {
         const rect = experience.getBoundingClientRect();
         const threshold = viewportHeight * 0.72;
-        const entered = rect.top < threshold;
-        if (entered) experience.classList.add("is-visible");
+        const entered = rect.top < threshold && rect.bottom > viewportHeight * 0.18;
+        experience.classList.toggle("is-visible", entered);
       }
 
       if (journey) {
         const rect = journey.getBoundingClientRect();
-        const progress = clamp((viewportHeight * 0.78 - rect.top) / (rect.height * 0.72));
+        const active = rect.top < viewportHeight * 0.82 && rect.bottom > viewportHeight * 0.18;
+        const progress = active
+          ? clamp((viewportHeight * 0.78 - rect.top) / (rect.height * 0.72))
+          : 0;
+        journey.classList.toggle("is-visible", active);
         journey.style.setProperty("--journey-progress", progress.toFixed(3));
       }
     };
@@ -115,23 +119,34 @@ export function useCompetenciasStage() {
     const reveal = (count: number) => {
       cards.slice(0, count).forEach((card) => card.classList.add("is-revealed"));
     };
+    const reset = () => {
+      cards.forEach((card) => card.classList.remove("is-revealed", "is-visible"));
+    };
     const triggers = Array.from(section.querySelectorAll<HTMLElement>("[data-competency-trigger]"));
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
           reveal(Number((entry.target as HTMLElement).dataset.competencyTrigger));
-          observer.unobserve(entry.target);
         });
       },
       { rootMargin: "-10% 0px -55% 0px", threshold: 0 },
     );
+    const sectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) reset();
+      },
+      { threshold: 0 },
+    );
 
     section.dataset.ready = "true";
     triggers.forEach((trigger) => observer.observe(trigger));
+    sectionObserver.observe(section);
 
     return () => {
       observer.disconnect();
+      sectionObserver.disconnect();
+      reset();
       delete section.dataset.ready;
     };
   }, []);

@@ -422,6 +422,112 @@ html:not(.dark) .hero-with-video .hero-description {
 .card-lift:hover .entrega-icon {
   transform: translateY(-2px) scale(1.08);
 }
+.audience-section {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 18% 36%, color-mix(in oklab, var(--primary) 10%, transparent), transparent 24rem),
+    linear-gradient(115deg, var(--background), color-mix(in oklab, var(--accent) 42%, var(--background)) 52%, var(--background));
+}
+.audience-section::before,
+.audience-section::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+  border: 1px solid color-mix(in oklab, var(--primary) 20%, transparent);
+  border-radius: 9999px;
+  animation: audience-drift 14s ease-in-out infinite alternate;
+}
+.audience-section::before {
+  width: 30rem;
+  height: 30rem;
+  top: -15rem;
+  right: -9rem;
+}
+.audience-section::after {
+  width: 15rem;
+  height: 15rem;
+  bottom: -8rem;
+  left: -4rem;
+  animation-delay: -5s;
+}
+.audience-section p:not(.section-kicker) {
+  position: relative;
+  z-index: 1;
+  padding-inline: 1.25rem;
+}
+.audience-section p:not(.section-kicker)::before {
+  position: absolute;
+  top: 0.7rem;
+  bottom: 0.7rem;
+  left: 0;
+  width: 2px;
+  content: "";
+  background: var(--primary);
+  opacity: 0.55;
+}
+.benefits-section {
+  isolation: isolate;
+  background:
+    linear-gradient(120deg, color-mix(in oklab, var(--accent) 55%, var(--surface)), var(--surface) 46%, color-mix(in oklab, var(--primary) 5%, var(--surface))),
+    var(--surface);
+}
+.benefits-section::before {
+  position: absolute;
+  inset: 2rem 8% auto;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--primary) 45%, transparent), transparent);
+  pointer-events: none;
+}
+.benefits-grid {
+  position: relative;
+}
+.benefits-grid::before {
+  position: absolute;
+  top: 3.5rem;
+  right: 12%;
+  left: 12%;
+  height: 1px;
+  content: "";
+  background: color-mix(in oklab, var(--primary) 20%, transparent);
+  pointer-events: none;
+}
+.benefit-card {
+  position: relative;
+  overflow: hidden;
+  border-color: color-mix(in oklab, var(--primary) 18%, var(--border));
+  background: color-mix(in oklab, var(--card) 88%, var(--accent));
+  opacity: 0;
+  transform: translateY(1rem);
+}
+.reveal.is-visible .benefit-card {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.benefit-card::after {
+  position: absolute;
+  top: 0;
+  right: 1.5rem;
+  left: 1.5rem;
+  height: 3px;
+  content: "";
+  border-radius: 0 0 9999px 9999px;
+  background: var(--primary);
+  transform: scaleX(0.5);
+  transition: transform 0.25s ease;
+}
+.benefit-card:hover::after {
+  transform: scaleX(1);
+}
+@keyframes audience-drift {
+  from { transform: translate3d(-0.75rem, 0.5rem, 0) rotate(-3deg); }
+  to { transform: translate3d(0.75rem, -0.5rem, 0) rotate(3deg); }
+}
 .experience-section,
 .journey-section {
   overflow: hidden;
@@ -519,9 +625,12 @@ html:not(.dark) .hero-with-video .hero-description {
   transform: translateY(-0.15rem) rotate(-5deg);
 }
 .experience-showcase__card:nth-child(2):hover {
-  transform: translateY(-0.45rem) rotate(0.6deg);
+  transform: none;
 }
 .experience-showcase__card:nth-child(2):hover .experience-showcase__icon {
+  transform: translateY(-0.15rem);
+}
+.experience-showcase__card:nth-child(3):hover .experience-showcase__icon {
   transform: translateY(-0.15rem) rotate(5deg);
 }
 .journey-flow {
@@ -834,7 +943,9 @@ html:not(.dark) .hero-with-video .hero-description {
   .experience-showcase__card,
   .journey-flow::after,
   .journey-flow__step,
-  .timeline-step + .timeline-step::before {
+  .timeline-step + .timeline-step::before,
+  .audience-section::before,
+  .audience-section::after {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
