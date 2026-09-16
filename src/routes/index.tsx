@@ -50,7 +50,7 @@ const proximasExperiencias: ExperienciaAgendada[] = [];
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Diagnóstico de Competências Empreendedoras | 100 Open Startups" },
+      { title: "Workshop de Competências Empreendedoras | 100 Open Startups" },
       {
         name: "description",
         content:
@@ -264,9 +264,9 @@ function Index() {
             Para quem é?
           </h2>
           <p className={`${LEITURA} mt-6 text-base leading-relaxed text-muted-foreground`}>
-            Para universitários de qualquer curso que querem desenvolver competências úteis para
+            Para universitários de qualquer curso, entre 18 e 25 anos, que querem desenvolver competências úteis para
             empreender, trabalhar em projetos, liderar equipes e tomar melhores decisões. Você não
-            precisa ter uma startup ou experiência prévia com empreendedorismo. A Série é para quem
+            precisa ter uma startup ou experiência prévia com empreendedorismo. A experiência é para quem
             está começando a graduação, entrando no mercado de trabalho ou buscando experiências
             práticas além da sala de aula.
           </p>
